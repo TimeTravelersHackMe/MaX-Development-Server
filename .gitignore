@@ -1,0 +1,56 @@
+# See https://github.com/github/gitignore for more ideas
+
+# Dreamweaver
+_notes/
+*.LCK
+dwsync.xml
+
+# Sublime
+sftp-config.json
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
+
+# Vagrant
+.vagrant/
+
+# SASS
+.sass-cache
+*.css.map
+
+# Node
+logs
+*.log
+pids
+*.pid
+*.seed
+lib-cov
+coverage
+.grunt
+.lock-wscript
+build/Release
+node_modules
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# OS X
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk

@@ -1,0 +1,182 @@
+# Set variables
+NGINX_CONF_FOLDER='/etc/nginx'
+NGINX_WEB_ROOT='/usr/local/nginx/html'
+UBUNTU_SETUP_FOLDER='/usr/local/src/ubuntu-server-setup'
+
+# Styles an echo message
+function outputMessage {
+        echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)#/\ $(tput sgr0)$(tput setab 0)$(tput setaf 7)$(tput smul)$1$(tput sgr0)"
+}
+
+# Styles and shows a command
+function execCommand {
+        echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)-----> $(tput sgr0)$(tput setab 0)$(tput setaf 7)$1$(tput sgr0)"
+        eval $1
+}
+
+# Shows a command - used for cases where regex is complicated
+function outputForComplicatedCommand {
+        echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)-----> $(tput sgr0)$(tput setab 0)$(tput setaf 7)$1$(tput sgr0)"
+}
+
+# Makes user press ENTER to continue opening a file
+function openPrompt {
+        echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)#/\ $(tput sgr0)$(tput setab 0)$(tput setaf 7)$(tput smul)Press ENTER to open $1 or any other key to view the current directory.$(tput sgr0)"
+        read -n1 -s key
+        case $key in
+                "")             vim $1;;
+                *)              echo ""
+                                ls -la;;
+        esac
+}
+#&?
+# Changes the directory to the web root
+function www() {
+        outputMessage 'Changing directory to the web root (/usr/local/nginx/html)'
+        execCommand "cd /usr/local/nginx/html"
+}
+
+# Changes the directory to different configuration file roots/opens the configuration files
+function config() {
+        case "$1" in
+                php)            outputMessage 'Changing directory to PHP configuration directory and opening php.ini (/etc/php5/fpm/php.ini)'
+                                cd /etc/php5/fpm
+                                openPrompt php.ini
+                                ;;
+                nginx)          outputMessage "Changing directory to nginx configuration directory ($NGINX_CONF_FOLDER)"
+                                cd $NGINX_CONF_FOLDER
+                                ;;
+                postfix)        outputMessage 'Changing directory to Postfix directory and opening main.cf (/etc/postfix/main.cf)'
+                                cd /etc/postfix
+                                openPrompt main.cf
+                                ;;
+                *)              outputMessage 'Configuration option not available. Available configuration options: nginx, php, postfix'
+                                outputMessage 'Usage example: config nginx'
+                                ;;
+        esac
+}
+
+# Adds wordpress install routine
+# Usage: 
+function wordpress() {
+
+cd $NGINX_WEB_ROOT
+
+# Checks if website directory already exists
+if [ ! -d "$1" ]; then
+
+        # Generate random MySQL credentials and random table prefix
+        DATABASE_NAME=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c8 | tr -d '-')
+        DATABASE_USER=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c8 | tr -d '-')
+        DATABASE_PREFIX=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c4 | tr -d '-')
+        DATABASE_PASSWORD=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c64 | tr -d '-')
+
+        # Create database
+        mysql -uroot --verbose -e "CREATE DATABASE $DATABASE_NAME; GRANT ALL PRIVILEGES ON $DATABASE_NAME.* TO '$DATABASE_USER'@'$MYSQL_HOST' IDENTIFIED BY '$DATABASE_PASSWORD'; FLUSH PRIVILEGES"
+
+        # Create base folder structure
+        mkdir $NGINX_WEB_ROOT/$1
+        mkdir $NGINX_WEB_ROOT/$1/public
+        mkdir $NGINX_WEB_ROOT/$1/public/wp
+        mkdir $NGINX_WEB_ROOT/$1/private
+        mkdir $NGINX_WEB_ROOT/$1/logs
+
+        # Install WordPress
+        cd $NGINX_WEB_ROOT/$1/public/wp
+        wget http://wordpress.org/latest.tar.gz
+        tar --strip-components=1 -xzvf latest.tar.gz > /dev/null
+
+        # Remove unnecessary files
+        rm latest.tar.gz
+        rm license.txt
+        rm readme.html
+        rm wp-config-sample.php
+        rm index.php
+        rm -rf wp-content
+
+        # Copy base wp-config.php file
+        cd $NGINX_WEB_ROOT/$1/public
+        cp $UBUNTU_SETUP_FOLDER/wordpress/wp-config.php wp-config.php
+
+        # Add index.php file
+        echo "<?php" >> index.php
+        echo "define('WP_USE_THEMES', true);" >> index.php
+        echo "require( dirname( __FILE__ ) . '/wp/wp-blog-header.php' );" >> index.php
+
+        # Edit connection settings in wp-config.php
+        sed -i "s/{DATABASE_NAME}/$DATABASE_NAME/g" wp-config.php
+        sed -i "s/{DATABASE_USER}/$DATABASE_USER/g" wp-config.php
+        sed -i "s/{DATABASE_PASSWORD}/$DATABASE_PASSWORD/g" wp-config.php
+        sed -i "s/{DATABASE_PREFIX}/$DATABASE_PREFIX/g" wp-config.php
+
+        # Edit Salts in wp-config.php
+        perl -i -pe 'BEGIN {$KEYSALTS = qx(curl -sS https://api.wordpress.org/secret-key/1.1/salt)} s/{AUTH-KEYS-SALTS}/$KEYSALTS/g' wp-config.php
+
+        # Edit default theme folder name in wp-config.php
+        sed -i "s/{DEFAULT_THEME}/$DEFAULT_THEME_FOLDER_NAME/g" wp-config.php
+        
+        # Add website name for php log and staging plugin
+        sed -i "s/{WEBSITE_NAME}/$1/g" wp-config.php
+        sed -i "s/{WEBSITE_NAME_MINUS_TLD}/$(eval echo $1 | cut -f1 -d"\"."\")/g" wp-config.php
+
+        # Adding custom WordPress file structure and creating blank index.php files in each folder
+        mkdir media
+        mkdir assets
+        echo '<?php' > assets/index.php
+        mkdir assets/addons
+        echo '<?php' > assets/addons/index.php
+        mkdir assets/themes
+        echo '<?php' > assets/themes/index.php
+        mkdir assets/includes
+
+        # Add symlink to media folder
+        cd wp
+        ln -s media ../media
+        cd ..
+
+        # Add default theme
+        cd assets/themes
+        git clone https://github.com/roots/sage.git
+
+        # Add default plugins
+        cd ../addons
+        wget https://downloads.wordpress.org/plugin/wordpress-seo.2.1.1.zip
+        unzip wordpress-seo.2.1.1.zip
+        wget https://downloads.wordpress.org/plugin/redirection.2.3.16.zip
+        unzip redirection.2.3.16.zip
+        wget https://downloads.wordpress.org/plugin/w3-total-cache.0.9.4.1.zip
+        unzip w3-total-cache.0.9.4.1.zip
+        wget https://downloads.wordpress.org/plugin/wp-front-end-editor.1.0.4.zip
+        unzip wp-front-end-editor.1.0.4.zip
+
+        # Add must-use plugins
+        cd ../includes
+        cp $UBUNTU_SETUP_FOLDER/wordpress/includes/wp-stage-switcher.php wp-stage-switcher.php
+
+        # Run WP CLI install commands
+        cd $NGINX_WEB_ROOT/$1/public
+        echo "Enter an admin username:"
+        read ADMIN_USERNAME
+        echo "Enter an admin password:"
+        read ADMIN_PASSWORD
+        echo "Enter an admin e-mail address:"
+        read ADMIN_EMAIL
+        echo "Enter a title for the website:"
+        read WEBSITE_TITLE
+        wp core --allow-root install --url=$1 --title="$WEBSITE_TITLE" --admin_user=$ADMIN_USERNAME --admin_password=$ADMIN_PASSWORD --admin_email=$ADMIN_EMAIL
+        
+        wp rewrite --allow-root structure '%postname%'
+
+        wp option --allow-root update uploads_use_yearmonth_folders 0
+        wp option --allow-root update category_base '%category%'
+# Website directory already exists
+else
+
+outputMessage "$1 already exists as a directory in $NGINX_WEB_ROOT"
+
+fi
+}
+
+# Short aliases
+alias ngxrestart='outputMessage "Restarting nginx" && execCommand "service nginx restart"'
+alias sites-available='outputMessage "Changing directory to sites-available directory" && execCommand "cd $NGINX_CONF_FOLDER/sites-available"'
