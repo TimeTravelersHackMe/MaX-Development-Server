@@ -9,7 +9,7 @@ NEW_ROOT_PASSWORD=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c32 | tr -d '-')
 
 # Environment settings
 POSTFIX_HOSTNAME='nullclient.com'
-EMAIL_ADDRESS='r@r.com'
+EMAIL_ADDRESS='chase@nullclient.com'
 
 # Set folder structure/version variables
 SOURCE_FOLDER='/usr/local/src'
@@ -175,6 +175,7 @@ execCommand "curl -sL https://deb.nodesource.com/setup | bash - > /dev/null"
 execCommand "apt-get install -y nodejs > /dev/null 2>&1"
 
 # Update NPM
+# Note: Should use NVM to manage Node/NPM
 outputMessage 'Updating NPM'
 execCommand "npm install -g npm > /dev/null"
 
@@ -201,6 +202,11 @@ execCommand "npm install -g bower > /dev/null"
 # See: http://foundation.zurb.com/apps/getting-started.html
 #outputMessage 'Installing Bundler'
 #execCommand "gem install bundler"
+
+ # Install Mono (for ASP support)
+ # See: http://www.mono-project.com/
+ outputMessage 'Installing Mono'
+ execCommand "apt-get install -y mono-complete > /dev/null"
 
 # Add aliases and functions to global bashrc file
 outputMessage 'Adding aliases to global bashrc file'

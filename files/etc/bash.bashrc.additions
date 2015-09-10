@@ -57,8 +57,8 @@ function config() {
 }
 
 # Adds wordpress install routine
-# Usage: 
-function wordpress() {
+# Usage: new-wordpress name-of-website.com
+function new-wordpress() {
 
 cd $NGINX_WEB_ROOT
 
@@ -151,7 +151,7 @@ if [ ! -d "$1" ]; then
 
         # Add must-use plugins
         cd ../includes
-        cp $UBUNTU_SETUP_FOLDER/wordpress/includes/wp-stage-switcher.php wp-stage-switcher.php
+        cp $UBUNTU_SETUP_FOLDER/wordpress/assets/includes/wp-stage-switcher.php wp-stage-switcher.php
 
         # Run WP CLI install commands
         cd $NGINX_WEB_ROOT/$1/public
@@ -169,6 +169,40 @@ if [ ! -d "$1" ]; then
 
         wp option --allow-root update uploads_use_yearmonth_folders 0
         wp option --allow-root update category_base '%category%'
+# Website directory already exists
+else
+
+outputMessage "$1 already exists as a directory in $NGINX_WEB_ROOT"
+
+fi
+}
+
+# Adds mono website install routine
+# Usage: new-mono name-of-website.com
+function new-mono() {
+
+cd $NGINX_WEB_ROOT
+
+# Checks if website directory already exists
+if [ ! -d "$1" ]; then
+
+        # Generate random MySQL credentials and random table prefix
+        DATABASE_NAME=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c8 | tr -d '-')
+        DATABASE_USER=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c8 | tr -d '-')
+        DATABASE_PREFIX=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c4 | tr -d '-')
+        DATABASE_PASSWORD=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c64 | tr -d '-')
+
+        # Create database
+        mysql -uroot --verbose -e "CREATE DATABASE $DATABASE_NAME; GRANT ALL PRIVILEGES ON $DATABASE_NAME.* TO '$DATABASE_USER'@'$MYSQL_HOST' IDENTIFIED BY '$DATABASE_PASSWORD'; FLUSH PRIVILEGES"
+
+        # Create base folder structure
+        mkdir $NGINX_WEB_ROOT/$1
+        mkdir $NGINX_WEB_ROOT/$1/public
+        mkdir $NGINX_WEB_ROOT/$1/public
+        mkdir $NGINX_WEB_ROOT/$1/private
+        mkdir $NGINX_WEB_ROOT/$1/logs
+        
+
 # Website directory already exists
 else
 
