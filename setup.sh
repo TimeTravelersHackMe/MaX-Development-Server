@@ -9,7 +9,7 @@ NEW_ROOT_PASSWORD=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c32 | tr -d '-')
 
 # Environment settings
 POSTFIX_HOSTNAME='nullclient.com'
-EMAIL_ADDRESS='brian.zalewski@sullivanperkins.com'
+EMAIL_ADDRESS='r@r.com'
 
 # Set folder structure/version variables
 SOURCE_FOLDER='/usr/local/src'
