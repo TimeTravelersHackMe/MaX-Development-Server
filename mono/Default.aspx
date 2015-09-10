@@ -10,7 +10,7 @@
 <script runat="server">
 private void Page_Load(Object sender, EventArgs e)
 {
-string connectionString = "Server=127.0.0.1;Database=sample;User ID=testuser;Password=somepassword;Pooling=false;";
+string connectionString = "Server=localhost;Database=DATABASE_NAME;User ID=DATABASE_USER;Password=DATABASE_PASSWORD;Pooling=false;";
 MySqlConnection dbcon = new MySqlConnection(connectionString);
 dbcon.Open();
 
