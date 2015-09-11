@@ -218,7 +218,7 @@ if [ ! -d "$1" ]; then
 
         # Starts Mono FastCGI server
         # See: http://www.mono-project.com/docs/web/fastcgi/nginx/
-        fastcgi-mono-server4 /applications=$1:/:/usr/local/nginx/html/$1/public/ /socket=tcp:127.0.0.1:9000
+        fastcgi-mono-server4 /applications=$1:/:/usr/local/nginx/html/$1/public/ /socket=tcp:127.0.0.1:9001
 
         # Restart nginx
         service nginx restart
