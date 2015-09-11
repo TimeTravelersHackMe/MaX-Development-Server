@@ -193,7 +193,7 @@ if [ ! -d "$1" ]; then
 
         # Create database and inject test data
         # See: https://www.linode.com/docs/websites/frameworks/build-aspnetmono-applications-with-modmono-and-apache-on-ubuntu-10-04-lucid
-        mysql -uroot --verbose -e "CREATE DATABASE $DATABASE_NAME; USE $DATABASE_NAME; CREATE TABLE test (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(25)); INSERT INTO sample.test VALUES (null, 'Lucy'); INSERT INTO sample.test VALUES (null, 'Ivan'); INSERT INTO sample.test VALUES (null, 'Nicole'); GRANT ALL PRIVILEGES ON $DATABASE_NAME.* TO '$DATABASE_USER'@'$MYSQL_HOST' IDENTIFIED BY '$DATABASE_PASSWORD'; FLUSH PRIVILEGES"
+        mysql -uroot --verbose -e "CREATE DATABASE $DATABASE_NAME; USE $DATABASE_NAME; CREATE TABLE test (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(25)); INSERT INTO $DATABASE_NAME.test VALUES (null, 'Lucy'); INSERT INTO $DATABASE_NAME.test VALUES (null, 'Ivan'); INSERT INTO $DATABASE_NAME.test VALUES (null, 'Nicole'); GRANT ALL PRIVILEGES ON $DATABASE_NAME.* TO '$DATABASE_USER'@'$MYSQL_HOST' IDENTIFIED BY '$DATABASE_PASSWORD'; FLUSH PRIVILEGES"
 
         # Create base folder structure
         mkdir $NGINX_WEB_ROOT/$1
