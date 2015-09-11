@@ -186,22 +186,45 @@ cd $NGINX_WEB_ROOT
 # Checks if website directory already exists
 if [ ! -d "$1" ]; then
 
-        # Generate random MySQL credentials and random table prefix
+        # Generate random MySQL credentials
         DATABASE_NAME=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c8 | tr -d '-')
         DATABASE_USER=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c8 | tr -d '-')
-        DATABASE_PREFIX=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c4 | tr -d '-')
         DATABASE_PASSWORD=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c64 | tr -d '-')
 
-        # Create database
-        mysql -uroot --verbose -e "CREATE DATABASE $DATABASE_NAME; GRANT ALL PRIVILEGES ON $DATABASE_NAME.* TO '$DATABASE_USER'@'$MYSQL_HOST' IDENTIFIED BY '$DATABASE_PASSWORD'; FLUSH PRIVILEGES"
+        # Create database and inject test data
+        # See: https://www.linode.com/docs/websites/frameworks/build-aspnetmono-applications-with-modmono-and-apache-on-ubuntu-10-04-lucid
+        mysql -uroot --verbose -e "CREATE DATABASE $DATABASE_NAME; USE $DATABASE_NAME; CREATE TABLE test (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(25)); INSERT INTO sample.test VALUES (null, 'Lucy'); INSERT INTO sample.test VALUES (null, 'Ivan'); INSERT INTO sample.test VALUES (null, 'Nicole'); GRANT ALL PRIVILEGES ON $DATABASE_NAME.* TO '$DATABASE_USER'@'$MYSQL_HOST' IDENTIFIED BY '$DATABASE_PASSWORD'; FLUSH PRIVILEGES"
 
         # Create base folder structure
         mkdir $NGINX_WEB_ROOT/$1
         mkdir $NGINX_WEB_ROOT/$1/public
-        mkdir $NGINX_WEB_ROOT/$1/public
         mkdir $NGINX_WEB_ROOT/$1/private
         mkdir $NGINX_WEB_ROOT/$1/logs
         
+        # Change directory to the new web directory and inject database connection details into Default.aspx
+        cd $NGINX_WEB_ROOT/$1/public
+        cp $UBUNTU_SETUP_FOLDER/mono/Default.aspx Default.aspx
+        cp $UBUNTU_SETUP_FOLDER/mono/web.config web.config
+        sed -i "s/{DATABASE_NAME}/$DATABASE_NAME/g" Default.aspx
+        sed -i "s/{DATABASE_USER}/$DATABASE_USER/g" Default.aspx
+        sed -i "s/{DATABASE_PASSWORD}/$DATABASE_PASSWORD/g" Default.aspx
+
+        # Change directory to nginx conf directory
+        cd $NGINX_CONF_FOLDER/sites-available
+        cp ../mono.conf $1.conf
+        sed -i "s/{DOMAIN_NAME}/$1/g" Default.aspx
+        cd $NGINX_CONF_FOLDER/sites-enabled
+        ln -s ../sites-available/$1.conf $1.conf
+
+        # Starts Mono FastCGI server
+        # See: http://www.mono-project.com/docs/web/fastcgi/nginx/
+        fastcgi-mono-server4 /applications=$1:/:/usr/local/nginx/html/$1/public/ /socket=tcp:127.0.0.1:9000
+
+        # Restart nginx
+        service nginx restart
+
+        # Change directory back to new web directory
+        cd $NGINX_WEB_ROOT/$1/public
 
 # Website directory already exists
 else
