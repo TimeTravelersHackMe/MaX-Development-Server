@@ -212,7 +212,7 @@ if [ ! -d "$1" ]; then
         # Change directory to nginx conf directory
         cd $NGINX_CONF_FOLDER/sites-available
         cp ../mono.conf $1.conf
-        sed -i "s/{DOMAIN_NAME}/$1/g" Default.aspx
+        sed -i "s/{DOMAIN_NAME}/$1/g" $1.conf
         cd $NGINX_CONF_FOLDER/sites-enabled
         ln -s ../sites-available/$1.conf $1.conf
 
