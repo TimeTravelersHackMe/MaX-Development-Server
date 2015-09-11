@@ -3,3 +3,12 @@ wget http://dev.mysql.com/get/Downloads/Connector-Net/mysql-connector-net-6.9.7-
 unzip mysql-connector-net-6.9.7-noinstall.zip -f mysql-connector-net
 cd mysql-connector-net
 gacutil /i MySql.Data.dll
+
+then you need to add something to machine.config from the MySQL/Connector ASP.NET thing for the dll
+
+now install startup script from here: http://yojimbo87.github.io/2010/03/14/mono-startup-script.html
+cd /etc/init.d
+chmod +x /etc/init.d/monoserve
+
+change mono-serve 2 to 4, add {} to $WEBAPPS, port 9001
+
