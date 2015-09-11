@@ -207,6 +207,7 @@ execCommand "npm install -g bower > /dev/null"
  # See: http://www.mono-project.com/
  outputMessage 'Installing Mono'
  execCommand "apt-get install -y mono-complete > /dev/null"
+ execCommand "apt-get install -y mono-fastcgi-server4 > /dev/null"
 
 # Add aliases and functions to global bashrc file
 outputMessage 'Adding aliases to global bashrc file'
