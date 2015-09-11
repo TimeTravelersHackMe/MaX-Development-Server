@@ -59,10 +59,10 @@ execCommand "make > /dev/null"
 execCommand "make install > /dev/null"
 
 # Clone base files from git repo
-outputMessage 'Cloning base files from https://gitlab.com/tHemAcHiNe/Ubuntu-Server-Setup.git'
+outputMessage 'Cloning base files from https://github.com/TimeTravelersHackMe/Ubuntu-Development-Server-Setup.git'
 execCommand "cd $SOURCE_FOLDER"
 execCommand "rm -rf ubuntu-server-setup"
-execCommand "git clone -q --depth=1 https://gitlab.com/tHemAcHiNe/Ubuntu-Server-Setup.git ubuntu-server-setup"
+execCommand "git clone -q --depth=1 https://github.com/TimeTravelersHackMe/Ubuntu-Development-Server-Setup.git ubuntu-server-setup"
 execCommand "cd ubuntu-server-setup/files"
 execCommand "cp -rf * /"
 
