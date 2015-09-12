@@ -13,3 +13,11 @@ chmod +x /etc/init.d/monoserve
 change mono-serve 2 to 4, add {} to $WEBAPPS, port 9001
 
 https://gist.githubusercontent.com/jokecamp/6399204/raw/cd3aa37f10b35ba16ed69ecf59d91f2d2ed8db04/monoserver
+
+Add dropbox_uploader.sh to users home directory - let them do setup (https://github.com/andreafabrizi/Dropbox-Uploader)
+
+
+
+
+
+
