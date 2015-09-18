@@ -230,6 +230,10 @@ execCommand "adduser --system --ingroup www-data --home /opt/tomcat8-latest tomc
 execCommand "chown -hR tomcat8:www-data /opt/tomcat8-latest /opt/apache-tomcat-${TOMCAT_VERSION}"
 execCommand "service tomcat8 start"
 
+# Install PostgreSQL
+outputMessage 'Installing PostgreSQL'
+execCommand "apt-get install -y postgresql postgresql-contrib"
+
 # Add aliases and functions to global bashrc file
 outputMessage 'Adding aliases to global bashrc file'
 execCommand "cat /etc/bash.bashrc.additions >> /etc/bash.bashrc"
