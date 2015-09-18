@@ -223,6 +223,10 @@ execCommand "apt-get install -y oracle-java8-set-default > /dev/null"
 outputMessage "Installing Apache Tomcat 8"
 execCommand "cd $SOURCE_FOLDER"
 execCommand "wget -O http://apache.go-parts.com/tomcat/tomcat-${TOMCAT_VERSION_NUMBER}/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz"
+execCommand "tar zxf apache-tomcat-${TOMCAT_VERSION}.tar.gz -C /opt"
+execCommand "ln -s /opt/apache-tomcat-8.0.23 /opt/tomcat8-latest"
+execCommand "adduser --system --ingroup www-data --home /opt/tomcat8-latest tomcat8"
+execCommand "chown -hR tomcat8:www-data /opt/tomcat8-latest /opt/apache-tomcat-8.0.23"
 
 # Add aliases and functions to global bashrc file
 outputMessage 'Adding aliases to global bashrc file'
