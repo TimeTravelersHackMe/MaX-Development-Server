@@ -17,6 +17,8 @@ NGINX_CONF_FOLDER='/etc/nginx'
 NGINX_WEB_ROOT='/usr/local/nginx/html'
 PAGESPEED_VERSION='1.9.32.3'
 NGINX_VERSION='1.8.0'
+TOMCAT_VERSION='8.0.26'
+TOMCAT_VERSION_NUMBER='8'
 
 # Set functions
 function outputMessage {
@@ -170,28 +172,28 @@ execCommand "sudo mv wp-cli.phar /usr/local/bin/wp"
 
 # Install Node.js
 # See https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#debian-and-ubuntu-based-linux-distributions
-outputMessage 'Installing the latest stable release of Node.js'
-execCommand "curl -sL https://deb.nodesource.com/setup | bash - > /dev/null"
-execCommand "apt-get install -y nodejs > /dev/null 2>&1"
+# outputMessage 'Installing the latest stable release of Node.js'
+# execCommand "curl -sL https://deb.nodesource.com/setup | bash - > /dev/null"
+# execCommand "apt-get install -y nodejs > /dev/null 2>&1"
 
 # Update NPM
 # Note: Should use NVM to manage Node/NPM
-outputMessage 'Updating NPM'
-execCommand "npm install -g npm > /dev/null"
+# outputMessage 'Updating NPM'
+# execCommand "npm install -g npm > /dev/null"
 
 # Installs Browser Sync
-outputMessage 'Installing Browser Sync'
-execCommand "npm install -g browser-sync > /dev/null 2>&1"
+# outputMessage 'Installing Browser Sync'
+# execCommand "npm install -g browser-sync > /dev/null 2>&1"
 
 # Install Gulp
 # See: https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md
-outputMessage 'Installing Gulp'
-execCommand "npm install -g gulp > /dev/null"
+# outputMessage 'Installing Gulp'
+# execCommand "npm install -g gulp > /dev/null"
 
 # Install Bower (required for Foundation)
 # See: http://foundation.zurb.com/apps/getting-started.html
-outputMessage 'Installing Bower'
-execCommand "npm install -g bower > /dev/null"
+# outputMessage 'Installing Bower'
+# execCommand "npm install -g bower > /dev/null"
 
 # Install Foundation for Apps CLI
 # See: http://foundation.zurb.com/apps/getting-started.html
@@ -203,19 +205,24 @@ execCommand "npm install -g bower > /dev/null"
 #outputMessage 'Installing Bundler'
 #execCommand "gem install bundler"
 
- # Install Mono (for ASP support)
- # See: http://www.mono-project.com/
- outputMessage 'Installing Mono'
- execCommand "apt-get install -y mono-complete > /dev/null"
- execCommand "apt-get install -y mono-fastcgi-server4 > /dev/null"
+# Install Mono (for ASP support)
+# See: http://www.mono-project.com/
+# outputMessage 'Installing Mono'
+# execCommand "apt-get install -y mono-complete > /dev/null"
+# execCommand "apt-get install -y mono-fastcgi-server4 > /dev/null"
 
-# Install Oracle's JDK
+# Install Oracle's JDK 8
 # See: https://vpsineu.com/blog/how-to-set-up-tomcat-8-with-nginx-reverse-proxy-on-an-ubuntu-14-04-vps/
 outputMessage "Installing Oracle's JDK"
 execCommand "add-apt-repository ppa:webupd8team/java"
 execCommand "apt-get update > /dev/null"
 execCommand "apt-get install -y oracle-java8-installer > /dev/null"
 execCommand "apt-get install -y oracle-java8-set-default > /dev/null"
+
+# Install Apache Tomcat 8
+outputMessage "Installing Apache Tomcat 8"
+execCommand "cd $SOURCE_FOLDER"
+execCommand "wget -O http://apache.go-parts.com/tomcat/tomcat-${TOMCAT_VERSION_NUMBER}/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz"
 
 # Add aliases and functions to global bashrc file
 outputMessage 'Adding aliases to global bashrc file'
