@@ -216,6 +216,7 @@ execCommand "sudo mv wp-cli.phar /usr/local/bin/wp"
 outputMessage "Installing Oracle's JDK"
 execCommand "add-apt-repository ppa:webupd8team/java"
 execCommand "apt-get update > /dev/null"
+execCommand "debconf-set-selections <<< shared/accepted-oracle-license-v1-1 select true"
 execCommand "apt-get install -y oracle-java8-installer > /dev/null"
 execCommand "apt-get install -y oracle-java8-set-default > /dev/null"
 
