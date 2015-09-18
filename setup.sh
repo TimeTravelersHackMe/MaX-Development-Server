@@ -190,6 +190,12 @@ execCommand "sudo mv wp-cli.phar /usr/local/bin/wp"
 # outputMessage 'Installing Gulp'
 # execCommand "npm install -g gulp > /dev/null"
 
+# Install Grunt CLI
+# outputMessage 'Installing Grunt CLI'
+# execCommand "npm install -g grunt-cli > /dev/null"
+
+
+
 # Install Bower (required for Foundation)
 # See: http://foundation.zurb.com/apps/getting-started.html
 # outputMessage 'Installing Bower'
@@ -233,6 +239,20 @@ execCommand "service tomcat8 start"
 # Install PostgreSQL
 outputMessage 'Installing PostgreSQL'
 execCommand "apt-get install -y postgresql postgresql-contrib"
+
+# Install RVM (Ruby Version Manager)
+# See: https://rvm.io/rvm/install
+outputMessage 'Installing RVM (Ruby Version Manager)'
+execCommand "gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 > /dev/null 2>&1"
+execCommand "curl -sSL https://get.rvm.io | bash"
+execCommand "echo progress-bar >> ~/.curlrc"
+execCommand "source /etc/profile"
+# For whatever reason RVM needs to be compiled from source to install compass
+execCommand "rvm install 2.2 --disable-binary"
+
+# Install Compass
+outputMessage 'Installing Compass'
+execCommand "gem install compass"
 
 # Add aliases and functions to global bashrc file
 outputMessage 'Adding aliases to global bashrc file'
