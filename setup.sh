@@ -209,6 +209,14 @@ execCommand "npm install -g bower > /dev/null"
  execCommand "apt-get install -y mono-complete > /dev/null"
  execCommand "apt-get install -y mono-fastcgi-server4 > /dev/null"
 
+# Install Oracle's JDK
+# See: https://vpsineu.com/blog/how-to-set-up-tomcat-8-with-nginx-reverse-proxy-on-an-ubuntu-14-04-vps/
+outputMessage "Installing Oracle's JDK"
+execCommand "add-apt-repository ppa:webupd8team/java"
+execCommand "apt-get update > /dev/null"
+execCommand "apt-get install -y oracle-java8-installer > /dev/null"
+execCommand "apt-get install -y oracle-java8-set-default > /dev/null"
+
 # Add aliases and functions to global bashrc file
 outputMessage 'Adding aliases to global bashrc file'
 execCommand "cat /etc/bash.bashrc.additions >> /etc/bash.bashrc"
