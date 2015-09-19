@@ -274,7 +274,7 @@ execCommand "service tomcat8 start"
 
 # Install PostgreSQL
 outputMessage 'Installing PostgreSQL'
-execCommand "apt-get install -y postgresql postgresql-contrib"
+execCommand "apt-get install -y postgresql postgresql-contrib > /dev/null"
 
 # Install RVM (Ruby Version Manager)
 # Source: https://rvm.io/rvm/install
