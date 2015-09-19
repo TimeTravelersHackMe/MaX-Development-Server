@@ -201,11 +201,6 @@ execCommand "source ~/.profile"
 execCommand "nvm install stable"
 execCommand "n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local"
 
-# Update NPM
-# Note: Should use NVM to manage Node/NPM
-# outputMessage 'Updating NPM'
-# execCommand "npm install -g npm > /dev/null"
-
 # Installs Browser Sync
 outputMessage 'Installing Browser Sync'
 execCommand "npm install -g browser-sync > /dev/null"
