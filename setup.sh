@@ -26,7 +26,7 @@ function outputMessage {
 	STRING=$1
 	MAX_LENGTH=52
 	# Test is string is odd and add a space to it if so
-	echo $((STRING%2))
+	#echo $((STRING%2))
 	#if [ $((STRING%2)) -ne 0 ];
 	#then
 	#	STRING="$STRING "
