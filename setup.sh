@@ -17,6 +17,7 @@ NGINX_CONF_FOLDER='/etc/nginx'
 NGINX_WEB_ROOT='/usr/local/nginx/html'
 PAGESPEED_VERSION='1.9.32.3'
 NGINX_VERSION='1.8.0'
+NVM_VERSION='0.26.1'
 TOMCAT_VERSION='8.0.26'
 TOMCAT_VERSION_NUMBER='8'
 
@@ -40,20 +41,20 @@ execCommand "apt-get update > /dev/null"
 
 # Install dependencies
 outputMessage 'Installing dependencies'
-execCommand "apt-get install -y build-essential zlib1g-dev libpcre3 libpcre3-dev unzip libssl-dev curl git software-properties-common > /dev/null 2>&1"
+execCommand "apt-get install -y build-essential zlib1g-dev libpcre3 libpcre3-dev unzip libssl-dev curl git software-properties-common > /dev/null"
 
 # Compile, and install nginx/pagespeed
 # See https://developers.google.com/speed/pagespeed/module/build_ngx_pagespeed_from_source
 # pagespeed version 1.9.32.3, psol version 1.9.32.3, nginx version 1.8.0
 outputMessage 'Downloading, compiling and installing nginx with pagespeed from source'
 execCommand "cd $SOURCE_FOLDER"
-execCommand "wget https://github.com/pagespeed/ngx_pagespeed/archive/release-${PAGESPEED_VERSION}-beta.zip > /dev/null 2>&1"
+execCommand "curl -# -o ${PAGESPEED_VERSION}-beta.zip https://github.com/pagespeed/ngx_pagespeed/archive/release-${PAGESPEED_VERSION}-beta.zip"
 execCommand "unzip release-${PAGESPEED_VERSION}-beta.zip > /dev/null"
 execCommand "cd ngx_pagespeed-release-${PAGESPEED_VERSION}-beta"
-execCommand "wget https://dl.google.com/dl/page-speed/psol/${PAGESPEED_VERSION}.tar.gz > /dev/null 2>&1"
+execCommand "curl -# -o ${PAGESPEED_VERSION}.tar.gz https://dl.google.com/dl/page-speed/psol/${PAGESPEED_VERSION}.tar.gz"
 execCommand "tar -xzvf ${PAGESPEED_VERSION}.tar.gz > /dev/null"
 execCommand "cd $SOURCE_FOLDER"
-execCommand "wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz > /dev/null 2>&1"
+execCommand "curl -# -o ${NGINX_VERSION}.tar.gz http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz"
 execCommand "tar -xvzf nginx-${NGINX_VERSION}.tar.gz > /dev/null"
 execCommand "cd nginx-${NGINX_VERSION}"
 execCommand "./configure --user=www-data --group=www-data --conf-path=${NGINX_CONF_FOLDER}/nginx.conf --with-pcre-jit --with-http_ssl_module --with-http_spdy_module --with-http_realip_module --add-module=${SOURCE_FOLDER}/ngx_pagespeed-release-${PAGESPEED_VERSION}-beta > /dev/null"
@@ -170,11 +171,11 @@ execCommand "curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/ph
 execCommand "chmod +x wp-cli.phar"
 execCommand "sudo mv wp-cli.phar /usr/local/bin/wp"
 
-# Install Node.js
-# See https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#debian-and-ubuntu-based-linux-distributions
-# outputMessage 'Installing the latest stable release of Node.js'
-# execCommand "curl -sL https://deb.nodesource.com/setup | bash - > /dev/null"
-# execCommand "apt-get install -y nodejs > /dev/null 2>&1"
+# Install NVM
+# See https://github.com/creationix/nvm
+outputMessage "Installing NVM"
+execCommand "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.26.1/install.sh | bash"
+execCommand "nvm install stable"
 
 # Update NPM
 # Note: Should use NVM to manage Node/NPM
@@ -182,24 +183,22 @@ execCommand "sudo mv wp-cli.phar /usr/local/bin/wp"
 # execCommand "npm install -g npm > /dev/null"
 
 # Installs Browser Sync
-# outputMessage 'Installing Browser Sync'
-# execCommand "npm install -g browser-sync > /dev/null 2>&1"
+outputMessage 'Installing Browser Sync'
+execCommand "npm install -g browser-sync > /dev/null"
 
 # Install Gulp
 # See: https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md
-# outputMessage 'Installing Gulp'
-# execCommand "npm install -g gulp > /dev/null"
+outputMessage 'Installing Gulp'
+execCommand "npm install -g gulp > /dev/null"
 
 # Install Grunt CLI
-# outputMessage 'Installing Grunt CLI'
-# execCommand "npm install -g grunt-cli > /dev/null"
-
-
+outputMessage 'Installing Grunt CLI'
+execCommand "npm install -g grunt-cli > /dev/null"
 
 # Install Bower (required for Foundation)
 # See: http://foundation.zurb.com/apps/getting-started.html
-# outputMessage 'Installing Bower'
-# execCommand "npm install -g bower > /dev/null"
+outputMessage 'Installing Bower'
+execCommand "npm install -g bower > /dev/null"
 
 # Install Foundation for Apps CLI
 # See: http://foundation.zurb.com/apps/getting-started.html
@@ -213,9 +212,9 @@ execCommand "sudo mv wp-cli.phar /usr/local/bin/wp"
 
 # Install Mono (for ASP support)
 # See: http://www.mono-project.com/
-# outputMessage 'Installing Mono'
-# execCommand "apt-get install -y mono-complete > /dev/null"
-# execCommand "apt-get install -y mono-fastcgi-server4 > /dev/null"
+outputMessage 'Installing Mono'
+execCommand "apt-get install -y mono-complete > /dev/null"
+execCommand "apt-get install -y mono-fastcgi-server4 > /dev/null"
 
 # Install Oracle's JDK 8
 # See: https://vpsineu.com/blog/how-to-set-up-tomcat-8-with-nginx-reverse-proxy-on-an-ubuntu-14-04-vps/
