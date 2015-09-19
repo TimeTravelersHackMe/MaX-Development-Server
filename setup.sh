@@ -183,13 +183,13 @@ execCommand "apt-get install -y mailutils"
 
 # Change Postfix to send-only mode
 outputMessage 'Changing Postfix to only accept emails from localhost'
-execCommand 'cd /etc/postfix'
+changeDir "cd /etc/postfix"
 execCommand "sed -i 's/inet_interfaces = all/inet_interfaces = localhost/g' main.cf"
 
 # Modify DNS server Postfix uses to Google DNS (some host DNS servers do not allow outgoing e-mail for whatever reason)
 # Source: http://ubuntuforums.org/showthread.php?t=882203
 outputMessage 'Modify the DNS server that Postfix uses'
-execCommand 'cd /var/spool/postfix/etc'
+changeDir "cd /var/spool/postfix/etc"
 execCommand "sed -i 's/nameserver 10.0.2.3/nameserver 8.8.8.8/g' resolv.conf"
 
 # Forwarding root mail messages to specified e-mail
