@@ -257,7 +257,7 @@ execCommand "chmod +x /etc/init.d/monoserve"
 # Install Oracle's JDK 8
 # Source: https://vpsineu.com/blog/how-to-set-up-tomcat-8-with-nginx-reverse-proxy-on-an-ubuntu-14-04-vps/
 outputMessage "Installing Oracle's JDK"
-execCommand "add-apt-repository ppa:webupd8team/java"
+execCommand "add-apt-repository ppa:webupd8team/java -y"
 execCommand "apt-get update > /dev/null"
 # Source: http://www.webupd8.org/2014/03/how-to-install-oracle-java-8-in-debian.html
 execCommand "echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections"
