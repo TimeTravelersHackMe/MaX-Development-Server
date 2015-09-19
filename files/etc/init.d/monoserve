@@ -1,6 +1,7 @@
 #!/bin/sh
 
 ### BEGIN INIT INFO
+# http://yojimbo87.github.io/2010/03/14/mono-startup-script.html
 # Provides:          monoserve.sh
 # Required-Start:    $local_fs $syslog $remote_fs
 # Required-Stop:     $local_fs $syslog $remote_fs
@@ -14,8 +15,8 @@ DAEMON=/usr/local/bin/mono
 NAME=monoserver
 DESC=monoserver
 
-MONOSERVER=$(which fastcgi-mono-server2)
-MONOSERVER_PID=$(ps auxf | grep fastcgi-mono-server2.exe | grep -v grep | awk '{print $2}')
+MONOSERVER=$(which fastcgi-mono-server4)
+MONOSERVER_PID=$(ps auxf | grep fastcgi-mono-server4.exe | grep -v grep | awk '{print $2}')
 
 WEBAPPS="www.domain1.xyz:/:/var/www/domain1.xyz/,www.domain2.xyz:/:/var/www/domain2.xyz/"
 
@@ -23,7 +24,7 @@ case "$1" in
         start)
                 if [ -z "${MONOSERVER_PID}" ]; then
                         echo "starting mono server"
-                        ${MONOSERVER} /applications=${WEBAPPS} /socket=tcp:127.0.0.1:9000 &
+                        ${MONOSERVER} /applications=${WEBAPPS} /socket=tcp:127.0.0.1:9000 /logfile=/var/log/mono/fastcgi.log &
                         echo "mono server started"
                 else
                         echo ${WEBAPPS}
