@@ -34,7 +34,7 @@ function outputMessage {
 	((TOTAL_SPACES_TO_ADD=($MAX_LENGTH-$STRING_LENGTH)/2))
 	# Create variable with TOTAL_SPACES amount of spaces
 	SPACES=''
-	for i in $TOTAL_SPACES_TO_ADD
+	for (( i=1; i <= $TOTAL_SPACES_TO_ADD; i++ ))
 	do
 		echo "space added"
         	SPACES=" $SPACES"
