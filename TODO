@@ -1,21 +1,6 @@
-cd /usr/local/src
-wget http://dev.mysql.com/get/Downloads/Connector-Net/mysql-connector-net-6.9.7-noinstall.zip
-unzip mysql-connector-net-6.9.7-noinstall.zip -f mysql-connector-net
-cd mysql-connector-net
-gacutil /i MySql.Data.dll
-
 then you need to add something to machine.config from the MySQL/Connector ASP.NET thing for the dll
 
-now install startup script from here: http://yojimbo87.github.io/2010/03/14/mono-startup-script.html
-cd /etc/init.d
-chmod +x /etc/init.d/monoserve
-
-change mono-serve 2 to 4, add {} to $WEBAPPS, port 9001
-
-https://gist.githubusercontent.com/jokecamp/6399204/raw/cd3aa37f10b35ba16ed69ecf59d91f2d2ed8db04/monoserver
-
-Add dropbox_uploader.sh to users home directory - let them do setup (https://github.com/andreafabrizi/Dropbox-Uploader)
-
+# Add dropbox_uploader.sh to users home directory (https://github.com/andreafabrizi/Dropbox-Uploader)
 
 # look into WordPress -> static website maker (JeKyll?)
 
