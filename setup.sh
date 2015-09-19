@@ -28,9 +28,10 @@ function outputMessage {
 	MAX_LENGTH=52
 	# Test is string is odd and add a space to it if so
 	STRING_CHARS=${#STRING}
+	EXTRA_SPACE=""
 	if [ $((STRING_CHARS%2)) -ne 0 ];
 	then
-		STRING="$STRING "
+		EXTRA_SPACE=" "
 	fi
 	((STRING_LENGTH=4+${#STRING}))
 	((TOTAL_SPACES_TO_ADD=($MAX_LENGTH-$STRING_LENGTH)/2))
@@ -40,11 +41,11 @@ function outputMessage {
 	do
         	SPACES=" $SPACES"
         done
-	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+-------------------------------------------------------+$(tput sgr0)" | tee --append ~/max.log
+	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+------------------------------------------------------+$(tput sgr0)" | tee --append ~/max.log
 	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)|                                                       |$(tput sgr0)" | tee --append ~/max.log
-	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)| $SPACES#/\ $(tput sgr0)$(tput setab 0)$(tput setaf 7)$(tput smul)$STRING$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)$SPACES |$(tput sgr0)" | tee --append ~/max.log
+	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)| $SPACES#/\ $(tput sgr0)$(tput setab 0)$(tput setaf 7)$(tput smul)$STRING$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)$EXTRA_SPACE$SPACES |$(tput sgr0)" | tee --append ~/max.log
 	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)|                                                       |$(tput sgr0)" | tee --append ~/max.log
-	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+-------------------------------------------------------+$(tput sgr0)" | tee --append ~/max.log
+	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+------------------------------------------------------+$(tput sgr0)" | tee --append ~/max.log
 }
 
 function execCommand {
