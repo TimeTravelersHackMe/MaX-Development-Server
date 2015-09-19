@@ -2,9 +2,11 @@
 source /etc/profile
 
 # NVM tab completion
+# You have to press TAB twice to utilize this feature for whatever reason
 [[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
 
 # RVM tab completion
+# You have to press TAB twice to utilize this feature for whatever reason
 [[ -r $rvm_path/scripts/completion ]] && . $rvm_path/scripts/completion
 
 # Set variables
