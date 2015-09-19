@@ -39,8 +39,6 @@ function outputMessage {
 		echo "space added"
         	SPACES=" $SPACES"
         done
-        echo "$SPACES hi"
-        echo $TOTAL_SPACES_TO_ADD
 	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+------------------------------------------------------+$(tput sgr0)"
 	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)|                                                      |$(tput sgr0)"
 	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)| $SPACES#/\ $(tput sgr0)$(tput setab 0)$(tput setaf 7)$(tput smul)$STRING$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)$SPACES |$(tput sgr0)"
