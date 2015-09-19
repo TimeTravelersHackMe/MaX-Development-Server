@@ -90,7 +90,7 @@ execCommand "git clone -q --depth=1 https://github.com/TimeTravelersHackMe/Ubunt
 execCommand "cd ubuntu-server-setup/files"
 execCommand "cp -rf * /"
 
-# Make nginx init script executable and add nginx to upstart
+# Make nginx init script executable and add nginx to start up
 # Source: https://github.com/JasonGiedymin/nginx-init-ubuntu (file included in server configuration file boilerplate)
 outputMessage 'Setting up nginx init script'
 execCommand "chmod +x /etc/init.d/nginx"
@@ -247,6 +247,11 @@ execCommand "curl -# -o http://dev.mysql.com/get/Downloads/Connector-Net/mysql-c
 execCommand "unzip mysql-connector-net-6.9.7-noinstall.zip -f mysql-connector-net"
 execCommand "cd mysql-connector-net"
 execCommand "gacutil /i MySql.Data.dll"
+
+# Add Mono startup script
+outputMessage 'Add Mono startup script'
+execCommand "cd /etc/init.d"
+execCommand "chmod +x /etc/init.d/monoserve"
 
 # Install Oracle's JDK 8
 # Source: https://vpsineu.com/blog/how-to-set-up-tomcat-8-with-nginx-reverse-proxy-on-an-ubuntu-14-04-vps/
