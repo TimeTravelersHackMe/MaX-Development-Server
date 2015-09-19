@@ -25,19 +25,17 @@ TOMCAT_VERSION_NUMBER='8'
 function outputMessage {
 	STRING=$1
 	MAX_LENGTH=52
-	# Test is string is even or odd
-	if [ $((foo%2)) -eq 0 ];
+	# Test is string is odd
+	if [ $((foo%2)) -ne 0 ]
 	then
-	# Even
-	else
-	# Odd
 		STRING=STRING+' '
 	fi
 	STRING_LENGTH=((4+${#1}))
 	TOTAL_SPACES=((($MAX_LENGTH-$STRING_LENGTH)/2))
 	# Create variable with TOTAL_SPACES amount of spaces
 	SPACES=''
-	for i in $TOTAL_SPACES; do
+	for i in $TOTAL_SPACES
+	do
             SPACES=SPACES+' '
         done
 	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+------------------------------------------------------+$(tput sgr0)"
