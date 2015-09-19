@@ -28,7 +28,7 @@ function outputMessage {
 	# Test is string is odd
 	if [ $((foo%2)) -ne 0 ]
 	then
-		STRING=STRING+' '
+		STRING=$STRING+' '
 	fi
 	((STRING_LENGTH=4+${#1}))
 	((TOTAL_SPACES=($MAX_LENGTH-$STRING_LENGTH)/2))
@@ -36,7 +36,7 @@ function outputMessage {
 	SPACES=''
 	for i in $TOTAL_SPACES
 	do
-            SPACES=SPACES+' '
+            SPACES=$SPACES+' '
         done
 	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+------------------------------------------------------+$(tput sgr0)"
 	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)|                                                      |$(tput sgr0)"
