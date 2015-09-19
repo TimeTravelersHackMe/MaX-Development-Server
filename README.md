@@ -1,6 +1,6 @@
 # MaX Development Server
 
-**MaX Development Server** is a development server setup script for Ubuntu 14.04 (tested with [Digital Ocean VPS](https://www.digitalocean.com/?refcode=751743d45e36) and Vagrant). **MaX Development Server** provides you with an environment to host websites written in PHP, Ruby (not yet implemented), ASP.NET, and Java. It utilizes **bleeding-edge technologies** and uses nginx as a reverse-proxy, providing you with the benefits of **super-fast** static file serving and the optimizations that come along with the built in Google pagespeed module.
+**MaX Development Server** is a development server setup script for Ubuntu 14.04 (tested with [Digital Ocean VPS](https://www.digitalocean.com/?refcode=751743d45e36) and Vagrant). **MaX Development Server** provides you with an environment to host websites written with PHP, Ruby (not yet implemented), ASP.NET, and Java. It utilizes **bleeding-edge technologies** and uses nginx as a reverse-proxy, providing you with the benefits of **super-fast** static file serving and the optimizations that come along with the built in Google pagespeed module.
 
 ## Features
 + 1 line installation
