@@ -49,7 +49,7 @@ function outputMessage {
 
 function execCommand {
 	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+-----> $(tput sgr0)$(tput setab 0)$(tput setaf 7)$1$(tput sgr0)"
-	eval $1
+	eval $1 2>&1 >>~/max.log | tee --append ~/max.log
 }
 
 function outputForComplicatedCommand {
@@ -58,11 +58,11 @@ function outputForComplicatedCommand {
 
 # Update server
 outputMessage 'Updating the server'
-execCommand "apt-get update > /dev/null"
+execCommand "apt-get update"
 
 # Install dependencies
 outputMessage 'Installing dependencies'
-execCommand "apt-get install -y build-essential zlib1g-dev libpcre3 libpcre3-dev unzip libssl-dev curl git software-properties-common > /dev/null"
+execCommand "apt-get install -y build-essential zlib1g-dev libpcre3 libpcre3-dev unzip libssl-dev curl git software-properties-common"
 
 # Compile, and install nginx/pagespeed
 # Source: https://developers.google.com/speed/pagespeed/module/build_ngx_pagespeed_from_source
@@ -70,17 +70,17 @@ execCommand "apt-get install -y build-essential zlib1g-dev libpcre3 libpcre3-dev
 outputMessage 'Installing nginx with pagespeed from source'
 execCommand "cd $SOURCE_FOLDER"
 execCommand "curl -# -o release-${PAGESPEED_VERSION}-beta.zip https://github.com/pagespeed/ngx_pagespeed/archive/release-${PAGESPEED_VERSION}-beta.zip"
-execCommand "unzip release-${PAGESPEED_VERSION}-beta.zip > /dev/null"
+execCommand "unzip release-${PAGESPEED_VERSION}-beta.zip"
 execCommand "cd ngx_pagespeed-release-${PAGESPEED_VERSION}-beta"
 execCommand "curl -# -o ${PAGESPEED_VERSION}.tar.gz https://dl.google.com/dl/page-speed/psol/${PAGESPEED_VERSION}.tar.gz"
-execCommand "tar -xzvf ${PAGESPEED_VERSION}.tar.gz > /dev/null"
+execCommand "tar -xzvf ${PAGESPEED_VERSION}.tar.gz"
 execCommand "cd $SOURCE_FOLDER"
 execCommand "curl -# -o nginx-${NGINX_VERSION}.tar.gz http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz"
-execCommand "tar -xvzf nginx-${NGINX_VERSION}.tar.gz > /dev/null"
+execCommand "tar -xvzf nginx-${NGINX_VERSION}.tar.gz"
 execCommand "cd nginx-${NGINX_VERSION}"
-execCommand "./configure --user=www-data --group=www-data --conf-path=${NGINX_CONF_FOLDER}/nginx.conf --with-pcre-jit --with-http_ssl_module --with-http_spdy_module --with-http_realip_module --add-module=${SOURCE_FOLDER}/ngx_pagespeed-release-${PAGESPEED_VERSION}-beta > /dev/null"
-execCommand "make > /dev/null"
-execCommand "make install > /dev/null"
+execCommand "./configure --user=www-data --group=www-data --conf-path=${NGINX_CONF_FOLDER}/nginx.conf --with-pcre-jit --with-http_ssl_module --with-http_spdy_module --with-http_realip_module --add-module=${SOURCE_FOLDER}/ngx_pagespeed-release-${PAGESPEED_VERSION}-beta"
+execCommand "make"
+execCommand "make install"
 
 # Clone base files from git repo
 outputMessage 'Cloning base files from GitHub'
@@ -94,7 +94,7 @@ execCommand "cp -rf * /"
 # Source: https://github.com/JasonGiedymin/nginx-init-ubuntu (file included in server configuration file boilerplate)
 outputMessage 'Setting up nginx init script'
 execCommand "chmod +x /etc/init.d/nginx"
-execCommand "update-rc.d -f nginx defaults > /dev/null"
+execCommand "update-rc.d -f nginx defaults"
 
 # Enable default configuration file and start nginx
 outputMessage 'Setting up default nginx configuration'
@@ -104,35 +104,35 @@ execCommand "ln -s ../sites-available/default default"
 # Install PHP-FPM
 # Source: http://www.maketecheasier.com/setup-lemh-stack-in-ubuntu/
 outputMessage 'Installing PHP-FPM'
-execCommand "apt-get install -y php5-fpm php5-mysql php5-curl > /dev/null 2>~/max.log"
+execCommand "apt-get install -y php5-fpm php5-mysql php5-curl"
 
 # Install HHVM
 # Source: https://github.com/facebook/hhvm/wiki/Prebuilt-packages-on-Ubuntu-14.04
 # Source: https://rtcamp.com/tutorials/php/hhvm-with-fpm-fallback/
 outputMessage 'Installing HHVM'
-execCommand "apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x5a16e7281be7a449 > /dev/null 2>~/max.log"
+execCommand "apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x5a16e7281be7a449"
 execCommand "add-apt-repository 'deb http://dl.hhvm.com/ubuntu trusty main'"
-execCommand "apt-get update > /dev/null"
-execCommand "apt-get install -y hhvm > /dev/null 2>~/max.log"
-execCommand "service nginx start > /dev/null"
-execCommand "service hhvm restart > /dev/null"
+execCommand "apt-get update"
+execCommand "apt-get install -y hhvm"
+execCommand "service nginx start"
+execCommand "service hhvm restart"
 
 # Add HHVM to startup
 # Source: https://github.com/fideloper/Vaprobash/blob/master/scripts/php.sh
 outputMessage 'Adding HHVM to startup'
-execCommand "update-rc.d hhvm defaults > /dev/null"
+execCommand "update-rc.d hhvm defaults"
 
 # Install MariaDB
 # Source: http://www.ubuntugeek.com/install-mariadb-on-ubuntu-14-04-trusty-server.html
 # Source: http://stackoverflow.com/questions/7739645/install-mysql-on-ubuntu-without-password-prompt
 outputMessage 'Installing MariaDB'
-execCommand "apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db > /dev/null 2>~/max.log"
+execCommand "apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db"
 execCommand "add-apt-repository 'deb http://download.nus.edu.sg/mirror/mariadb/repo/10.0/ubuntu trusty main'"
 execCommand "export DEBIAN_FRONTEND=noninteractive"
 execCommand "debconf-set-selections <<< 'mariadb-server-10.0 mysql-server/root_password password '$DB_ROOT_PASSWORD"
 execCommand "debconf-set-selections <<< 'mariadb-server-10.0 mysql-server/root_password_again password '$DB_ROOT_PASSWORD"
-execCommand "apt-get update > /dev/null"
-execCommand "apt-get install -y mariadb-server > /dev/null 2>~/max.log"
+execCommand "apt-get update"
+execCommand "apt-get install -y mariadb-server"
 
 # Adding root password to /root/.my.cnf
 outputMessage "Adding database root password to ~/.my.cnf"
@@ -148,7 +148,7 @@ execCommand "debconf-set-selections <<< 'phpmyadmin phpmyadmin/dbconfig-install 
 execCommand "debconf-set-selections <<< 'phpmyadmin phpmyadmin/mysql/admin-pass password '$DB_ROOT_PASSWORD"
 execCommand "debconf-set-selections <<< 'phpmyadmin phpmyadmin/app-password-confirm password '$PHPMYADMIN_PASSWORD"
 execCommand "debconf-set-selections <<< 'phpmyadmin phpmyadmin/mysql/app-pass password '$PHPMYADMIN_PASSWORD"
-execCommand "apt-get install -y phpmyadmin > /dev/null 2>~/max.log"
+execCommand "apt-get install -y phpmyadmin"
 execCommand "ln -s /usr/share/phpmyadmin /usr/local/nginx/html"
 
 # Updating database port in PHPMyAdmin configuration file
@@ -161,7 +161,7 @@ sed -i "s/\$dbport='';/\$dbport='3306';/g" config-db.php
 outputMessage 'Updating PHPMyAdmin theme'
 execCommand "cd /usr/share/phpmyadmin/themes"
 execCommand "cp $SOURCE_FOLDER/ubuntu-server-setup/phpmyadmin/metro-2.3.zip metro-2.3.zip"
-execCommand "unzip metro-2.3.zip > /dev/null"
+execCommand "unzip metro-2.3.zip"
 execCommand "rm metro-2.3.zip"
 
 # Install Postfix
@@ -169,7 +169,7 @@ execCommand "rm metro-2.3.zip"
 outputMessage 'Installing Postfix'
 execCommand "debconf-set-selections <<< 'postfix postfix/mailname string '$POSTFIX_HOSTNAME"
 execCommand "debconf-set-selections <<< 'postfix postfix/main_mailer_type string \"Internet Site\"'"
-execCommand "apt-get install -y mailutils > /dev/null 2>~/max.log"
+execCommand "apt-get install -y mailutils"
 
 # Change Postfix to send-only mode
 outputMessage 'Changing Postfix to only accept emails from localhost'
@@ -188,7 +188,7 @@ execCommand "echo \"root: ${EMAIL_ADDRESS}\" >> /etc/aliases"
 
 # Install WP-CLI
 outputMessage "Installing WP-CLI"
-execCommand "curl -# -o wp-cli.phar https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar > /dev/null"
+execCommand "curl -# -o wp-cli.phar https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
 execCommand "chmod +x wp-cli.phar"
 execCommand "sudo mv wp-cli.phar /usr/local/bin/wp"
 
@@ -196,33 +196,33 @@ execCommand "sudo mv wp-cli.phar /usr/local/bin/wp"
 # Source: https://github.com/creationix/nvm
 # Source: https://www.digitalocean.com/community/tutorials/how-to-install-node-js-with-nvm-node-version-manager-on-a-vps
 outputMessage "Installing NVM"
-execCommand "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.26.1/install.sh | bash > /dev/null"
+execCommand "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.26.1/install.sh | bash"
 execCommand "source ~/.profile"
 execCommand "nvm install stable"
 execCommand "n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local"
 
 # Installs Browser Sync
 outputMessage 'Installing Browser Sync'
-execCommand "npm install -g browser-sync > /dev/null"
+execCommand "npm install -g browser-sync"
 
 # Install Gulp
 # Source: https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md
 outputMessage 'Installing Gulp'
-execCommand "npm install -g gulp > /dev/null"
+execCommand "npm install -g gulp"
 
 # Install Grunt CLI
 outputMessage 'Installing Grunt CLI'
-execCommand "npm install -g grunt-cli > /dev/null"
+execCommand "npm install -g grunt-cli"
 
 # Install Bower (required for Foundation)
 # Source: http://foundation.zurb.com/apps/getting-started.html
 outputMessage 'Installing Bower'
-execCommand "npm install -g bower > /dev/null"
+execCommand "npm install -g bower"
 
 # Install Foundation for Apps CLI
 # Source: http://foundation.zurb.com/apps/getting-started.html
 outputMessage 'Installing Foundation CLI'
-execCommand "npm install -g foundation-cli > /dev/null"
+execCommand "npm install -g foundation-cli"
 
 # Install Bundler Gem (required for Foundation)
 # Source: http://foundation.zurb.com/apps/getting-started.html
@@ -232,8 +232,8 @@ execCommand "gem install bundler"
 # Install Mono (for ASP support)
 # Source: http://www.mono-project.com/
 outputMessage 'Installing Mono'
-execCommand "apt-get install -y mono-complete > /dev/null 2>~/max.log"
-execCommand "apt-get install -y mono-fastcgi-server4 > /dev/null"
+execCommand "apt-get install -y mono-complete"
+execCommand "apt-get install -y mono-fastcgi-server4"
 
 # Add MySQL database connector for Mono
 outputMessage 'Add Mono MySQL database connector'
@@ -251,12 +251,12 @@ execCommand "chmod +x /etc/init.d/monoserve"
 # Install Oracle's JDK 8
 # Source: https://vpsineu.com/blog/how-to-set-up-tomcat-8-with-nginx-reverse-proxy-on-an-ubuntu-14-04-vps/
 outputMessage "Installing Oracle's JDK"
-execCommand "add-apt-repository ppa:webupd8team/java -y > /dev/null"
-execCommand "apt-get update > /dev/null"
+execCommand "add-apt-repository ppa:webupd8team/java -y"
+execCommand "apt-get update"
 # Source: http://www.webupd8.org/2014/03/how-to-install-oracle-java-8-in-debian.html
 execCommand "echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections"
-execCommand "apt-get install -y oracle-java8-installer > /dev/null 2>~/max.log"
-execCommand "apt-get install -y oracle-java8-set-default > /dev/null"
+execCommand "apt-get install -y oracle-java8-installer"
+execCommand "apt-get install -y oracle-java8-set-default"
 
 # Install Apache Tomcat 8
 outputMessage "Installing Apache Tomcat 8"
@@ -264,19 +264,19 @@ execCommand "cd $SOURCE_FOLDER"
 execCommand "curl -# -o apache-tomcat-${TOMCAT_VERSION}.tar.gz http://ftp.wayne.edu/apache/tomcat/tomcat-${TOMCAT_VERSION_NUMBER}/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz"
 execCommand "tar zxf apache-tomcat-${TOMCAT_VERSION}.tar.gz -C /opt"
 execCommand "ln -s /opt/apache-tomcat-${TOMCAT_VERSION} /opt/tomcat8-latest"
-execCommand "adduser --system --ingroup www-data --home /opt/tomcat8-latest tomcat8 > /dev/null 2>~/max.log"
+execCommand "adduser --system --ingroup www-data --home /opt/tomcat8-latest tomcat8"
 execCommand "chown -hR tomcat8:www-data /opt/tomcat8-latest /opt/apache-tomcat-${TOMCAT_VERSION}"
 execCommand "service tomcat8 start"
 
 # Install PostgreSQL
 outputMessage 'Installing PostgreSQL'
-execCommand "apt-get install -y postgresql postgresql-contrib > /dev/null"
+execCommand "apt-get install -y postgresql postgresql-contrib"
 
 # Install RVM (Ruby Version Manager)
 # Source: https://rvm.io/rvm/install
 outputMessage 'Installing RVM (Ruby Version Manager)'
-execCommand "gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 > /dev/null 2>~/max.log"
-execCommand "curl -sSL https://get.rvm.io | bash > /dev/null"
+execCommand "gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3"
+execCommand "curl -sSL https://get.rvm.io | bash"
 execCommand "echo progress-bar >> ~/.curlrc"
 execCommand "source /etc/profile"
 
@@ -287,7 +287,7 @@ execCommand "source /etc/profile"
 
 # Install Compass
 outputMessage 'Installing Compass'
-execCommand "gem install compass > /dev/null"
+execCommand "gem install compass"
 
 # Add aliases and functions to global bashrc file
 outputMessage 'Adding aliases to global bashrc file'
