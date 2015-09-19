@@ -40,32 +40,39 @@ function outputMessage {
 	do
         	SPACES=" $SPACES"
         done
-	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+-------------------------------------------------------+$(tput sgr0)"
-	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)|                                                       |$(tput sgr0)"
-	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)| $SPACES#/\ $(tput sgr0)$(tput setab 0)$(tput setaf 7)$(tput smul)$STRING$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)$SPACES |$(tput sgr0)"
-	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)|                                                       |$(tput sgr0)"
-	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+-------------------------------------------------------+$(tput sgr0)"
+	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+-------------------------------------------------------+$(tput sgr0)" | tee --append ~/max.log
+	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)|                                                       |$(tput sgr0)" | tee --append ~/max.log
+	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)| $SPACES#/\ $(tput sgr0)$(tput setab 0)$(tput setaf 7)$(tput smul)$STRING$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)$SPACES |$(tput sgr0)" | tee --append ~/max.log
+	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)|                                                       |$(tput sgr0)" | tee --append ~/max.log
+	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+-------------------------------------------------------+$(tput sgr0)" | tee --append ~/max.log
 }
 
 function execCommand {
-	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+-----> $(tput sgr0)$(tput setab 0)$(tput setaf 7)$1$(tput sgr0)"
+	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+-----> $(tput sgr0)$(tput setab 0)$(tput setaf 7)$1$(tput sgr0)" | tee --append ~/max.log
 	# Sends STDERR and STDOUT to max.log and displays STDERR to screen
 	# http://unix.stackexchange.com/questions/79996/how-to-redirect-stdout-and-stderr-to-a-file-and-display-stderr-to-console
 	eval $1 2>&1 >>~/max.log | tee --append ~/max.log
 }
 
 function outputForComplicatedCommand {
-	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+-----> $(tput sgr0)$(tput setab 0)$(tput setaf 7)$1$(tput sgr0)"
+	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+-----> $(tput sgr0)$(tput setab 0)$(tput setaf 7)$1$(tput sgr0)" | tee --append ~/max.log
+}
+
+function changeDir {
+	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+-----> $(tput sgr0)$(tput setab 0)$(tput setaf 7)$1$(tput sgr0)" | tee --append ~/max.log
+	eval $1
+	# Can not figure out how to pipe STDERR/STDOUT from the cd command so the following line adds the current directory after the cd command is evaluated
+	pwd >> ~/max.log
 }
 
 # Switch to root user
 outputMessage 'Switching to root user'
 execCommand "sudo su"
 outputMessage 'Testing CD'
-execCommand "cd /usr/local/src"
+changeDir "cd /usr/local/src"
 execCommand "echo "hi" > hi.hi"
-execCommand "cd ~"
-execCommand "cd $SOURCE_FOLDER"
+changeDir "cd ~"
+changeDir "cd $SOURCE_FOLDER"
 execCommand "echo "hello" > hello.hello"
 
 # Update server
@@ -80,26 +87,26 @@ execCommand "apt-get install -y build-essential zlib1g-dev libpcre3 libpcre3-dev
 # Source: https://developers.google.com/speed/pagespeed/module/build_ngx_pagespeed_from_source
 # pagespeed version 1.9.32.3, psol version 1.9.32.3, nginx version 1.8.0
 outputMessage 'Installing nginx with pagespeed from source'
-execCommand "cd $SOURCE_FOLDER"
-execCommand "curl -# -o release-${PAGESPEED_VERSION}-beta.zip https://github.com/pagespeed/ngx_pagespeed/archive/release-${PAGESPEED_VERSION}-beta.zip"
+changeDir "cd$SOURCE_FOLDER"
+execCommand "curl -# -o https://github.com/pagespeed/ngx_pagespeed/archive/release-${PAGESPEED_VERSION}-beta.zip"
 execCommand "unzip release-${PAGESPEED_VERSION}-beta.zip"
-execCommand "cd ngx_pagespeed-release-${PAGESPEED_VERSION}-beta"
-execCommand "curl -# -o ${PAGESPEED_VERSION}.tar.gz https://dl.google.com/dl/page-speed/psol/${PAGESPEED_VERSION}.tar.gz"
+changeDir "cd ngx_pagespeed-release-${PAGESPEED_VERSION}-beta"
+execCommand "curl -# -o https://dl.google.com/dl/page-speed/psol/${PAGESPEED_VERSION}.tar.gz"
 execCommand "tar -xzvf ${PAGESPEED_VERSION}.tar.gz"
-execCommand "cd $SOURCE_FOLDER"
+changeDir "cd $SOURCE_FOLDER"
 execCommand "curl -# -o nginx-${NGINX_VERSION}.tar.gz http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz"
 execCommand "tar -xvzf nginx-${NGINX_VERSION}.tar.gz"
-execCommand "cd nginx-${NGINX_VERSION}"
+changeDir "cd nginx-${NGINX_VERSION}"
 execCommand "./configure --user=www-data --group=www-data --conf-path=${NGINX_CONF_FOLDER}/nginx.conf --with-pcre-jit --with-http_ssl_module --with-http_spdy_module --with-http_realip_module --add-module=${SOURCE_FOLDER}/ngx_pagespeed-release-${PAGESPEED_VERSION}-beta"
 execCommand "make"
 execCommand "make install"
 
 # Clone base files from git repo
 outputMessage 'Cloning base files from GitHub'
-execCommand "cd $SOURCE_FOLDER"
+changeDir "cd $SOURCE_FOLDER"
 execCommand "rm -rf ubuntu-server-setup"
 execCommand "git clone -q --depth=1 https://github.com/TimeTravelersHackMe/Ubuntu-Development-Server-Setup.git ubuntu-server-setup"
-execCommand "cd ubuntu-server-setup/files"
+changeDir "cd ubuntu-server-setup/files"
 execCommand "cp -rf * /"
 
 # Make nginx init script executable and add nginx to start up
@@ -110,7 +117,7 @@ execCommand "update-rc.d -f nginx defaults"
 
 # Enable default configuration file and start nginx
 outputMessage 'Setting up default nginx configuration'
-execCommand "cd $NGINX_CONF_FOLDER/sites-enabled"
+changeDir "cd $NGINX_CONF_FOLDER/sites-enabled"
 execCommand "ln -s ../sites-available/default default"
 
 # Install PHP-FPM
@@ -165,13 +172,13 @@ execCommand "ln -s /usr/share/phpmyadmin /usr/local/nginx/html"
 
 # Updating database port in PHPMyAdmin configuration file
 outputMessage 'Updating database port in PHPMyAdmin configuration file'
-execCommand "cd /etc/phpmyadmin"
+changeDir "cd /etc/phpmyadmin"
 outputForComplicatedCommand "sed -i \"s/\$dbport='';/\$dbport='3308';/g\" config-db.php"
 sed -i "s/\$dbport='';/\$dbport='3306';/g" config-db.php
 
 # Installing new PHPMyAdmin theme
 outputMessage 'Updating PHPMyAdmin theme'
-execCommand "cd /usr/share/phpmyadmin/themes"
+changeDir "cd /usr/share/phpmyadmin/themes"
 execCommand "cp $SOURCE_FOLDER/ubuntu-server-setup/phpmyadmin/metro-2.3.zip metro-2.3.zip"
 execCommand "unzip metro-2.3.zip"
 execCommand "rm metro-2.3.zip"
@@ -249,15 +256,15 @@ execCommand "apt-get install -y mono-fastcgi-server4"
 
 # Add MySQL database connector for Mono
 outputMessage 'Add Mono MySQL database connector'
-execCommand "cd /usr/local/src"
+changeDir "cd /usr/local/src"
 execCommand "curl -# -o mysql-connector-net-${MONO_DB_CONNECTOR_VERSION}-noinstall.zip http://dev.mysql.com/get/Downloads/Connector-Net/mysql-connector-net-${MONO_DB_CONNECTOR_VERSION}-noinstall.zip"
 execCommand "unzip mysql-connector-net-${MONO_DB_CONNECTOR_VERSION}-noinstall.zip -f mysql-connector-net"
-execCommand "cd mysql-connector-net"
+changeDir "cd mysql-connector-net"
 execCommand "gacutil /i MySql.Data.dll"
 
 # Add Mono startup script
 outputMessage 'Add Mono startup script'
-execCommand "cd /etc/init.d"
+changeDir "cd /etc/init.d"
 execCommand "chmod +x /etc/init.d/monoserve"
 
 # Install Oracle's JDK 8
@@ -272,7 +279,7 @@ execCommand "apt-get install -y oracle-java8-set-default"
 
 # Install Apache Tomcat 8
 outputMessage "Installing Apache Tomcat 8"
-execCommand "cd $SOURCE_FOLDER"
+changeDir "cd $SOURCE_FOLDER"
 execCommand "curl -# -o apache-tomcat-${TOMCAT_VERSION}.tar.gz http://ftp.wayne.edu/apache/tomcat/tomcat-${TOMCAT_VERSION_NUMBER}/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz"
 execCommand "tar zxf apache-tomcat-${TOMCAT_VERSION}.tar.gz -C /opt"
 execCommand "ln -s /opt/apache-tomcat-${TOMCAT_VERSION} /opt/tomcat8-latest"
