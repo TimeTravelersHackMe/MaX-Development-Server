@@ -33,12 +33,12 @@ function outputMessage {
 }
 
 function execCommand {
-	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)-----> $(tput sgr0)$(tput setab 0)$(tput setaf 7)$1$(tput sgr0)"
+	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+-----> $(tput sgr0)$(tput setab 0)$(tput setaf 7)$1$(tput sgr0)"
 	eval $1
 }
 
 function outputForComplicatedCommand {
-	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)-----> $(tput sgr0)$(tput setab 0)$(tput setaf 7)$1$(tput sgr0)"
+	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+-----> $(tput sgr0)$(tput setab 0)$(tput setaf 7)$1$(tput sgr0)"
 }
 
 # Update server
