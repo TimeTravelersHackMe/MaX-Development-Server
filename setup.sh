@@ -241,11 +241,6 @@ execCommand "npm install -g bower"
 outputMessage 'Installing Foundation CLI'
 execCommand "npm install -g foundation-cli"
 
-# Install Bundler Gem (required for Foundation)
-# Source: http://foundation.zurb.com/apps/getting-started.html
-outputMessage 'Installing Bundler'
-execCommand "gem install bundler"
-
 # Install Mono (for ASP support)
 # Source: http://www.mono-project.com/
 outputMessage 'Installing Mono'
@@ -305,6 +300,11 @@ execCommand "source /etc/profile"
 # Install Compass
 outputMessage 'Installing Compass'
 execCommand "gem install compass"
+
+# Install Bundler Gem (required for Foundation)
+# Source: http://foundation.zurb.com/apps/getting-started.html
+outputMessage 'Installing Bundler'
+execCommand "gem install bundler"
 
 # Add aliases and functions to global bashrc file
 outputMessage 'Adding aliases to global bashrc file'
