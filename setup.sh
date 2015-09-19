@@ -26,7 +26,7 @@ function outputMessage {
 	STRING=$1
 	MAX_LENGTH=52
 	# Test is string is odd
-	if [ (($STRING%2)) -ne 0 ]
+	if [ ((${STRING}%2)) -ne 0 ]
 	then
 		STRING="$STRING "
 	fi
