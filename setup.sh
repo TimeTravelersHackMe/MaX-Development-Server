@@ -65,16 +65,6 @@ function changeDir {
 	pwd >> ~/max.log
 }
 
-# Switch to root user
-outputMessage 'Switching to root user'
-execCommand "sudo su"
-outputMessage 'Testing CD'
-changeDir "cd /usr/local/src"
-execCommand "echo "hi" > hi.hi"
-changeDir "cd ~"
-changeDir "cd $SOURCE_FOLDER"
-execCommand "echo "hello" > hello.hello"
-
 # Update server
 outputMessage 'Updating the server'
 execCommand "apt-get update"
@@ -219,6 +209,14 @@ execCommand "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.26.1/i
 execCommand "source ~/.profile"
 execCommand "nvm install stable"
 execCommand "n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local"
+
+# Install MongoDB
+# Source: https://www.digitalocean.com/community/tutorials/how-to-install-mongodb-on-ubuntu-14-04
+outputMessage 'Installing MongoDB'
+execCommand "sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10"
+execCommand 'echo "deb http://repo.mongodb.org/apt/ubuntu "$(lsb_release -sc)"/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list'
+execCommand "apt-get update"
+execCommand "apt-get install -y mongodb-org"
 
 # Installs Browser Sync
 outputMessage 'Installing Browser Sync'
