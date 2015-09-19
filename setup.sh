@@ -188,7 +188,7 @@ execCommand "echo \"root: ${EMAIL_ADDRESS}\" >> /etc/aliases"
 
 # Install WP-CLI
 outputMessage "Installing WP-CLI"
-execCommand "curl -# -o https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar > /dev/null"
+execCommand "curl -# -o wp-cli.phar https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar > /dev/null"
 execCommand "chmod +x wp-cli.phar"
 execCommand "sudo mv wp-cli.phar /usr/local/bin/wp"
 
@@ -196,7 +196,7 @@ execCommand "sudo mv wp-cli.phar /usr/local/bin/wp"
 # Source: https://github.com/creationix/nvm
 # Source: https://www.digitalocean.com/community/tutorials/how-to-install-node-js-with-nvm-node-version-manager-on-a-vps
 outputMessage "Installing NVM"
-execCommand "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.26.1/install.sh | bash"
+execCommand "curl -# -o https://raw.githubusercontent.com/creationix/nvm/v0.26.1/install.sh | bash"
 execCommand "source ~/.profile"
 execCommand "nvm install stable"
 execCommand "n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local"
@@ -239,6 +239,14 @@ execCommand "npm install -g bower > /dev/null"
 outputMessage 'Installing Mono'
 execCommand "apt-get install -y mono-complete > /dev/null"
 execCommand "apt-get install -y mono-fastcgi-server4 > /dev/null"
+
+# Add MySQL database connector for Mono
+outputMessage 'Add Mono MySQL database connector'
+execCommand "cd /usr/local/src"
+execCommand "curl -# -o http://dev.mysql.com/get/Downloads/Connector-Net/mysql-connector-net-6.9.7-noinstall.zip"
+execCommand "unzip mysql-connector-net-6.9.7-noinstall.zip -f mysql-connector-net"
+execCommand "cd mysql-connector-net"
+execCommand "gacutil /i MySql.Data.dll"
 
 # Install Oracle's JDK 8
 # Source: https://vpsineu.com/blog/how-to-set-up-tomcat-8-with-nginx-reverse-proxy-on-an-ubuntu-14-04-vps/
