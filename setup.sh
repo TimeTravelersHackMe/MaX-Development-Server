@@ -58,6 +58,16 @@ function outputForComplicatedCommand {
 	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+-----> $(tput sgr0)$(tput setab 0)$(tput setaf 7)$1$(tput sgr0)"
 }
 
+# Switch to root user
+outputMessage 'Switching to root user'
+execCommand "sudo su"
+outputMessage 'Testing CD'
+execCommand "cd /usr/local/src"
+execCommand "echo "hi" > hi.hi"
+execCommand "cd ~"
+execCommand "cd $SOURCE_FOLDER"
+execCommand "echo "hello" > hello.hello"
+
 # Update server
 outputMessage 'Updating the server'
 execCommand "apt-get update"
