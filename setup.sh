@@ -283,7 +283,10 @@ execCommand "gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A
 execCommand "curl -sSL https://get.rvm.io | bash > /dev/null"
 execCommand "echo progress-bar >> ~/.curlrc"
 execCommand "source /etc/profile"
+
+# Install Ruby
 # For whatever reason RVM needs to be compiled from source to install compass
+outputMessage 'Using RVM to install Ruby from source'
 execCommand "rvm install 2.2 --disable-binary"
 
 # Install Compass
