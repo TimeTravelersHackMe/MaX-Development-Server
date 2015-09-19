@@ -30,8 +30,8 @@ function outputMessage {
 	then
 		STRING=STRING+' '
 	fi
-	STRING_LENGTH=((4+${#1}))
-	TOTAL_SPACES=((($MAX_LENGTH-$STRING_LENGTH)/2))
+	((STRING_LENGTH=4+${#1}))
+	((TOTAL_SPACES=($MAX_LENGTH-$STRING_LENGTH)/2))
 	# Create variable with TOTAL_SPACES amount of spaces
 	SPACES=''
 	for i in $TOTAL_SPACES
