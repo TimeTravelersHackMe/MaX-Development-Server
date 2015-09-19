@@ -195,7 +195,7 @@ execCommand "sudo mv wp-cli.phar /usr/local/bin/wp"
 # Source: https://github.com/creationix/nvm
 # Source: https://www.digitalocean.com/community/tutorials/how-to-install-node-js-with-nvm-node-version-manager-on-a-vps
 outputMessage "Installing NVM"
-execCommand "curl -# -o https://raw.githubusercontent.com/creationix/nvm/v0.26.1/install.sh | bash"
+execCommand "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.26.1/install.sh | bash"
 execCommand "source ~/.profile"
 execCommand "nvm install stable"
 execCommand "n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local"
