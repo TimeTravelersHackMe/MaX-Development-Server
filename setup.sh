@@ -65,7 +65,7 @@ outputMessage 'Installing dependencies'
 execCommand "apt-get install -y build-essential zlib1g-dev libpcre3 libpcre3-dev unzip libssl-dev curl git software-properties-common > /dev/null"
 
 # Compile, and install nginx/pagespeed
-# See https://developers.google.com/speed/pagespeed/module/build_ngx_pagespeed_from_source
+# Source: https://developers.google.com/speed/pagespeed/module/build_ngx_pagespeed_from_source
 # pagespeed version 1.9.32.3, psol version 1.9.32.3, nginx version 1.8.0
 outputMessage 'Installing nginx with pagespeed from source'
 execCommand "cd $SOURCE_FOLDER"
@@ -91,7 +91,7 @@ execCommand "cd ubuntu-server-setup/files"
 execCommand "cp -rf * /"
 
 # Make nginx init script executable and add nginx to upstart
-# See https://github.com/JasonGiedymin/nginx-init-ubuntu (file included in server configuration file boilerplate)
+# Source: https://github.com/JasonGiedymin/nginx-init-ubuntu (file included in server configuration file boilerplate)
 outputMessage 'Setting up nginx init script'
 execCommand "chmod +x /etc/init.d/nginx"
 execCommand "update-rc.d -f nginx defaults > /dev/null"
@@ -102,13 +102,13 @@ execCommand "cd $NGINX_CONF_FOLDER/sites-enabled"
 execCommand "ln -s ../sites-available/default default"
 
 # Install PHP-FPM
-# See: http://www.maketecheasier.com/setup-lemh-stack-in-ubuntu/
+# Source: http://www.maketecheasier.com/setup-lemh-stack-in-ubuntu/
 outputMessage 'Installing PHP-FPM'
 execCommand "apt-get install -y php5-fpm php5-mysql php5-curl > /dev/null 2>&1"
 
 # Install HHVM
-# See https://github.com/facebook/hhvm/wiki/Prebuilt-packages-on-Ubuntu-14.04
-# See https://rtcamp.com/tutorials/php/hhvm-with-fpm-fallback/
+# Source: https://github.com/facebook/hhvm/wiki/Prebuilt-packages-on-Ubuntu-14.04
+# Source: https://rtcamp.com/tutorials/php/hhvm-with-fpm-fallback/
 outputMessage 'Installing HHVM'
 execCommand "apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x5a16e7281be7a449 > /dev/null 2>&1"
 execCommand "add-apt-repository 'deb http://dl.hhvm.com/ubuntu trusty main'"
@@ -118,13 +118,13 @@ execCommand "service nginx start > /dev/null"
 execCommand "service hhvm restart > /dev/null"
 
 # Add HHVM to startup
-# See: https://github.com/fideloper/Vaprobash/blob/master/scripts/php.sh
+# Source: https://github.com/fideloper/Vaprobash/blob/master/scripts/php.sh
 outputMessage 'Adding HHVM to startup'
 execCommand "update-rc.d hhvm defaults > /dev/null"
 
 # Install MariaDB
-# See: http://www.ubuntugeek.com/install-mariadb-on-ubuntu-14-04-trusty-server.html
-# See: http://stackoverflow.com/questions/7739645/install-mysql-on-ubuntu-without-password-prompt
+# Source: http://www.ubuntugeek.com/install-mariadb-on-ubuntu-14-04-trusty-server.html
+# Source: http://stackoverflow.com/questions/7739645/install-mysql-on-ubuntu-without-password-prompt
 outputMessage 'Installing MariaDB'
 execCommand "apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db > /dev/null 2>&1"
 execCommand "add-apt-repository 'deb http://download.nus.edu.sg/mirror/mariadb/repo/10.0/ubuntu trusty main'"
@@ -141,7 +141,7 @@ execCommand "echo user=root >> ~/.my.cnf"
 execCommand "echo password=${DB_ROOT_PASSWORD} >> ~/.my.cnf"
 
 # Install PHPMyAdmin
-# See: https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-nginx-on-an-ubuntu-14-04-server
+# Source: https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-nginx-on-an-ubuntu-14-04-server
 outputMessage 'Installing PHPMyAdmin'
 execCommand "debconf-set-selections <<< 'phpmyadmin phpmyadmin/reconfigure-webserver multiselect none'"
 execCommand "debconf-set-selections <<< 'phpmyadmin phpmyadmin/dbconfig-install boolean true'"
@@ -165,7 +165,7 @@ execCommand "unzip metro-2.3.zip > /dev/null"
 execCommand "rm metro-2.3.zip"
 
 # Install Postfix
-# See: https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-postfix-as-a-send-only-smtp-server-on-ubuntu-14-04
+# Source: https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-postfix-as-a-send-only-smtp-server-on-ubuntu-14-04
 outputMessage 'Installing Postfix'
 execCommand "debconf-set-selections <<< 'postfix postfix/mailname string '$POSTFIX_HOSTNAME"
 execCommand "debconf-set-selections <<< 'postfix postfix/main_mailer_type string \"Internet Site\"'"
@@ -177,7 +177,7 @@ execCommand 'cd /etc/postfix'
 execCommand "sed -i 's/inet_interfaces = all/inet_interfaces = localhost/g' main.cf"
 
 # Modify DNS server Postfix uses to Google DNS (some host DNS servers do not allow outgoing e-mail for whatever reason)
-# See: http://ubuntuforums.org/showthread.php?t=882203
+# Source: http://ubuntuforums.org/showthread.php?t=882203
 outputMessage 'Modify the DNS server that Postfix uses'
 execCommand 'cd /var/spool/postfix/etc'
 execCommand "sed -i 's/nameserver 10.0.2.3/nameserver 8.8.8.8/g' resolv.conf"
@@ -193,10 +193,13 @@ execCommand "chmod +x wp-cli.phar"
 execCommand "sudo mv wp-cli.phar /usr/local/bin/wp"
 
 # Install NVM
-# See https://github.com/creationix/nvm
+# Source: https://github.com/creationix/nvm
+# Source: https://www.digitalocean.com/community/tutorials/how-to-install-node-js-with-nvm-node-version-manager-on-a-vps
 outputMessage "Installing NVM"
 execCommand "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.26.1/install.sh | bash"
+execCommand "source ~/.profile"
 execCommand "nvm install stable"
+execCommand "n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local"
 
 # Update NPM
 # Note: Should use NVM to manage Node/NPM
@@ -208,7 +211,7 @@ outputMessage 'Installing Browser Sync'
 execCommand "npm install -g browser-sync > /dev/null"
 
 # Install Gulp
-# See: https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md
+# Source: https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md
 outputMessage 'Installing Gulp'
 execCommand "npm install -g gulp > /dev/null"
 
@@ -217,32 +220,33 @@ outputMessage 'Installing Grunt CLI'
 execCommand "npm install -g grunt-cli > /dev/null"
 
 # Install Bower (required for Foundation)
-# See: http://foundation.zurb.com/apps/getting-started.html
+# Source: http://foundation.zurb.com/apps/getting-started.html
 outputMessage 'Installing Bower'
 execCommand "npm install -g bower > /dev/null"
 
 # Install Foundation for Apps CLI
-# See: http://foundation.zurb.com/apps/getting-started.html
+# Source: http://foundation.zurb.com/apps/getting-started.html
 #outputMessage 'Installing Foundation CLI'
 #execCommand "npm install -g foundation-cli > /dev/null"
 
 # Install Bundler Gem (required for Foundation)
-# See: http://foundation.zurb.com/apps/getting-started.html
+# Source: http://foundation.zurb.com/apps/getting-started.html
 #outputMessage 'Installing Bundler'
 #execCommand "gem install bundler"
 
 # Install Mono (for ASP support)
-# See: http://www.mono-project.com/
+# Source: http://www.mono-project.com/
 outputMessage 'Installing Mono'
 execCommand "apt-get install -y mono-complete > /dev/null"
 execCommand "apt-get install -y mono-fastcgi-server4 > /dev/null"
 
 # Install Oracle's JDK 8
-# See: https://vpsineu.com/blog/how-to-set-up-tomcat-8-with-nginx-reverse-proxy-on-an-ubuntu-14-04-vps/
+# Source: https://vpsineu.com/blog/how-to-set-up-tomcat-8-with-nginx-reverse-proxy-on-an-ubuntu-14-04-vps/
 outputMessage "Installing Oracle's JDK"
 execCommand "add-apt-repository ppa:webupd8team/java"
 execCommand "apt-get update > /dev/null"
-execCommand "debconf-set-selections <<< shared/accepted-oracle-license-v1-1 select true"
+# Source: http://www.webupd8.org/2014/03/how-to-install-oracle-java-8-in-debian.html
+execCommand "echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections"
 execCommand "apt-get install -y oracle-java8-installer > /dev/null"
 execCommand "apt-get install -y oracle-java8-set-default > /dev/null"
 
@@ -261,7 +265,7 @@ outputMessage 'Installing PostgreSQL'
 execCommand "apt-get install -y postgresql postgresql-contrib"
 
 # Install RVM (Ruby Version Manager)
-# See: https://rvm.io/rvm/install
+# Source: https://rvm.io/rvm/install
 outputMessage 'Installing RVM (Ruby Version Manager)'
 execCommand "gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 > /dev/null 2>&1"
 execCommand "curl -sSL https://get.rvm.io | bash"
