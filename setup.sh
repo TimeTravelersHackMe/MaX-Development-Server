@@ -18,6 +18,7 @@ NGINX_WEB_ROOT='/usr/local/nginx/html'
 PAGESPEED_VERSION='1.9.32.3'
 NGINX_VERSION='1.8.0'
 NVM_VERSION='0.26.1'
+MONO_DB_CONNECTOR_VERSION='6.9.7'
 TOMCAT_VERSION='8.0.26'
 TOMCAT_VERSION_NUMBER='8'
 
@@ -236,14 +237,14 @@ execCommand "gem install bundler"
 # Install Mono (for ASP support)
 # Source: http://www.mono-project.com/
 outputMessage 'Installing Mono'
-execCommand "apt-get install -y mono-complete > /dev/null"
+execCommand "apt-get install -y mono-complete > /dev/null 2>~/max.log"
 execCommand "apt-get install -y mono-fastcgi-server4 > /dev/null"
 
 # Add MySQL database connector for Mono
 outputMessage 'Add Mono MySQL database connector'
 execCommand "cd /usr/local/src"
-execCommand "curl -# -o http://dev.mysql.com/get/Downloads/Connector-Net/mysql-connector-net-6.9.7-noinstall.zip"
-execCommand "unzip mysql-connector-net-6.9.7-noinstall.zip -f mysql-connector-net"
+execCommand "curl -# -o mysql-connector-net-${MONO_DB_CONNECTOR_VERSION}-noinstall.zip http://dev.mysql.com/get/Downloads/Connector-Net/mysql-connector-net-${MONO_DB_CONNECTOR_VERSION}-noinstall.zip"
+execCommand "unzip mysql-connector-net-${MONO_DB_CONNECTOR_VERSION}-noinstall.zip -f mysql-connector-net"
 execCommand "cd mysql-connector-net"
 execCommand "gacutil /i MySql.Data.dll"
 
@@ -255,7 +256,7 @@ execCommand "chmod +x /etc/init.d/monoserve"
 # Install Oracle's JDK 8
 # Source: https://vpsineu.com/blog/how-to-set-up-tomcat-8-with-nginx-reverse-proxy-on-an-ubuntu-14-04-vps/
 outputMessage "Installing Oracle's JDK"
-execCommand "add-apt-repository ppa:webupd8team/java -y"
+execCommand "add-apt-repository ppa:webupd8team/java -y > /dev/null"
 execCommand "apt-get update > /dev/null"
 # Source: http://www.webupd8.org/2014/03/how-to-install-oracle-java-8-in-debian.html
 execCommand "echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections"
@@ -286,8 +287,8 @@ execCommand "source /etc/profile"
 
 # Install Ruby
 # For whatever reason RVM needs to be compiled from source to install compass
-outputMessage 'Using RVM to install Ruby from source'
-execCommand "rvm install 2.2 --disable-binary"
+# outputMessage 'Using RVM to install Ruby from source'
+# execCommand "rvm install 2.2 --disable-binary"
 
 # Install Compass
 outputMessage 'Installing Compass'
