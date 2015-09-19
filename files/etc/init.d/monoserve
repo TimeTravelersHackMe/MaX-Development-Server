@@ -18,13 +18,13 @@ DESC=monoserver
 MONOSERVER=$(which fastcgi-mono-server4)
 MONOSERVER_PID=$(ps auxf | grep fastcgi-mono-server4.exe | grep -v grep | awk '{print $2}')
 
-WEBAPPS="www.domain1.xyz:/:/var/www/domain1.xyz/,www.domain2.xyz:/:/var/www/domain2.xyz/"
+WEBAPPS="nullclient.com:/:/usr/local/nginx/html/nullclient.com/public/"
 
 case "$1" in
         start)
                 if [ -z "${MONOSERVER_PID}" ]; then
                         echo "starting mono server"
-                        ${MONOSERVER} /applications=${WEBAPPS} /socket=tcp:127.0.0.1:9000 /logfile=/var/log/mono/fastcgi.log &
+                        ${MONOSERVER} /applications=${WEBAPPS} /socket=tcp:127.0.0.1:9001 /logfile=/var/log/mono/fastcgi.log &
                         echo "mono server started"
                 else
                         echo ${WEBAPPS}
