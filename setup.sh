@@ -268,7 +268,7 @@ execCommand "cd $SOURCE_FOLDER"
 execCommand "curl -# -o apache-tomcat-${TOMCAT_VERSION}.tar.gz http://ftp.wayne.edu/apache/tomcat/tomcat-${TOMCAT_VERSION_NUMBER}/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz"
 execCommand "tar zxf apache-tomcat-${TOMCAT_VERSION}.tar.gz -C /opt"
 execCommand "ln -s /opt/apache-tomcat-${TOMCAT_VERSION} /opt/tomcat8-latest"
-execCommand "adduser --system --ingroup www-data --home /opt/tomcat8-latest tomcat8 > /dev/null"
+execCommand "adduser --system --ingroup www-data --home /opt/tomcat8-latest tomcat8 > /dev/null 2>~/max.log"
 execCommand "chown -hR tomcat8:www-data /opt/tomcat8-latest /opt/apache-tomcat-${TOMCAT_VERSION}"
 execCommand "service tomcat8 start"
 
