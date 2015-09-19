@@ -26,7 +26,10 @@ function outputMessage {
 	STRING=$1
 	MAX_LENGTH=52
 	# Test is string is odd and add a space to it if so
-	[ $((STRING%2)) -ne 0 ] && STRING="$STRING "
+	if [ $((STRING%2)) -ne 0 ];
+	then
+		STRING="$STRING "
+	fi
 	((STRING_LENGTH=4+${#STRING}))
 	((TOTAL_SPACES_TO_ADD=($MAX_LENGTH-$STRING_LENGTH)/2))
 	# Create variable with TOTAL_SPACES amount of spaces
