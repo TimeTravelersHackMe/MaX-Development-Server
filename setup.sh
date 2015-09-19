@@ -188,7 +188,7 @@ execCommand "echo \"root: ${EMAIL_ADDRESS}\" >> /etc/aliases"
 
 # Install WP-CLI
 outputMessage "Installing WP-CLI"
-execCommand "curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar > /dev/null"
+execCommand "curl -# -o https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar > /dev/null"
 execCommand "chmod +x wp-cli.phar"
 execCommand "sudo mv wp-cli.phar /usr/local/bin/wp"
 
