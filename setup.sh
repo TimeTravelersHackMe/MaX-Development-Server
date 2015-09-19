@@ -288,7 +288,7 @@ execCommand "rvm install 2.2 --disable-binary"
 
 # Install Compass
 outputMessage 'Installing Compass'
-execCommand "gem install compass"
+execCommand "gem install compass > /dev/null"
 
 # Add aliases and functions to global bashrc file
 outputMessage 'Adding aliases to global bashrc file'
