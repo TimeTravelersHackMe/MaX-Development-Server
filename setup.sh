@@ -103,16 +103,16 @@ execCommand "ln -s ../sites-available/default default"
 # Install PHP-FPM
 # Source: http://www.maketecheasier.com/setup-lemh-stack-in-ubuntu/
 outputMessage 'Installing PHP-FPM'
-execCommand "apt-get install -y php5-fpm php5-mysql php5-curl > /dev/null 2>&1"
+execCommand "apt-get install -y php5-fpm php5-mysql php5-curl > /dev/null 2>~/max.log"
 
 # Install HHVM
 # Source: https://github.com/facebook/hhvm/wiki/Prebuilt-packages-on-Ubuntu-14.04
 # Source: https://rtcamp.com/tutorials/php/hhvm-with-fpm-fallback/
 outputMessage 'Installing HHVM'
-execCommand "apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x5a16e7281be7a449 > /dev/null 2>&1"
+execCommand "apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x5a16e7281be7a449 > /dev/null 2>~/max.log"
 execCommand "add-apt-repository 'deb http://dl.hhvm.com/ubuntu trusty main'"
 execCommand "apt-get update > /dev/null"
-execCommand "apt-get install -y hhvm > /dev/null 2>&1"
+execCommand "apt-get install -y hhvm > /dev/null 2>~/max.log"
 execCommand "service nginx start > /dev/null"
 execCommand "service hhvm restart > /dev/null"
 
@@ -125,13 +125,13 @@ execCommand "update-rc.d hhvm defaults > /dev/null"
 # Source: http://www.ubuntugeek.com/install-mariadb-on-ubuntu-14-04-trusty-server.html
 # Source: http://stackoverflow.com/questions/7739645/install-mysql-on-ubuntu-without-password-prompt
 outputMessage 'Installing MariaDB'
-execCommand "apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db > /dev/null 2>&1"
+execCommand "apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db > /dev/null 2>~/max.log"
 execCommand "add-apt-repository 'deb http://download.nus.edu.sg/mirror/mariadb/repo/10.0/ubuntu trusty main'"
 execCommand "export DEBIAN_FRONTEND=noninteractive"
 execCommand "debconf-set-selections <<< 'mariadb-server-10.0 mysql-server/root_password password '$DB_ROOT_PASSWORD"
 execCommand "debconf-set-selections <<< 'mariadb-server-10.0 mysql-server/root_password_again password '$DB_ROOT_PASSWORD"
 execCommand "apt-get update > /dev/null"
-execCommand "apt-get install -y mariadb-server > /dev/null 2>&1"
+execCommand "apt-get install -y mariadb-server > /dev/null 2>~/max.log"
 
 # Adding root password to /root/.my.cnf
 outputMessage "Adding database root password to ~/.my.cnf"
@@ -147,7 +147,7 @@ execCommand "debconf-set-selections <<< 'phpmyadmin phpmyadmin/dbconfig-install 
 execCommand "debconf-set-selections <<< 'phpmyadmin phpmyadmin/mysql/admin-pass password '$DB_ROOT_PASSWORD"
 execCommand "debconf-set-selections <<< 'phpmyadmin phpmyadmin/app-password-confirm password '$PHPMYADMIN_PASSWORD"
 execCommand "debconf-set-selections <<< 'phpmyadmin phpmyadmin/mysql/app-pass password '$PHPMYADMIN_PASSWORD"
-execCommand "apt-get install -y phpmyadmin > /dev/null 2>&1"
+execCommand "apt-get install -y phpmyadmin > /dev/null 2>~/max.log"
 execCommand "ln -s /usr/share/phpmyadmin /usr/local/nginx/html"
 
 # Updating database port in PHPMyAdmin configuration file
@@ -168,7 +168,7 @@ execCommand "rm metro-2.3.zip"
 outputMessage 'Installing Postfix'
 execCommand "debconf-set-selections <<< 'postfix postfix/mailname string '$POSTFIX_HOSTNAME"
 execCommand "debconf-set-selections <<< 'postfix postfix/main_mailer_type string \"Internet Site\"'"
-execCommand "apt-get install -y mailutils > /dev/null 2>&1"
+execCommand "apt-get install -y mailutils > /dev/null 2>~/max.log"
 
 # Change Postfix to send-only mode
 outputMessage 'Changing Postfix to only accept emails from localhost'
@@ -279,7 +279,7 @@ execCommand "apt-get install -y postgresql postgresql-contrib > /dev/null"
 # Install RVM (Ruby Version Manager)
 # Source: https://rvm.io/rvm/install
 outputMessage 'Installing RVM (Ruby Version Manager)'
-execCommand "gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 > /dev/null 2>&1"
+execCommand "gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 > /dev/null 2>~/max.log"
 execCommand "curl -sSL https://get.rvm.io | bash"
 execCommand "echo progress-bar >> ~/.curlrc"
 execCommand "source /etc/profile"
