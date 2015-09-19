@@ -280,7 +280,7 @@ execCommand "apt-get install -y postgresql postgresql-contrib > /dev/null"
 # Source: https://rvm.io/rvm/install
 outputMessage 'Installing RVM (Ruby Version Manager)'
 execCommand "gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 > /dev/null 2>~/max.log"
-execCommand "curl -sSL https://get.rvm.io | bash"
+execCommand "curl -sSL https://get.rvm.io | bash > /dev/null"
 execCommand "echo progress-bar >> ~/.curlrc"
 execCommand "source /etc/profile"
 # For whatever reason RVM needs to be compiled from source to install compass
