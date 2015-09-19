@@ -23,6 +23,8 @@ TOMCAT_VERSION_NUMBER='8'
 
 # Set functions
 function outputMessage {
+	echo $LINES
+	echo $COLUMNS
 	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+------------------------------------------------------+$(tput sgr0)"
 	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)|                                                      |$(tput sgr0)"
 	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)|     #/\ $(tput sgr0)$(tput setab 0)$(tput setaf 7)$(tput smul)$1$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6) |$(tput sgr0)"
