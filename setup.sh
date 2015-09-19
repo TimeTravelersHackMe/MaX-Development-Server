@@ -23,11 +23,26 @@ TOMCAT_VERSION_NUMBER='8'
 
 # Set functions
 function outputMessage {
-	echo $LINES
-	echo $COLUMNS
+	STRING=$1
+	MAX_LENGTH=52
+	# Test is string is even or odd
+	if [ $((foo%2)) -eq 0 ];
+	then
+	# Even
+	else
+	# Odd
+		STRING=STRING+' '
+	fi
+	STRING_LENGTH=((4+${#1}))
+	TOTAL_SPACES=((($MAX_LENGTH-$STRING_LENGTH)/2))
+	# Create variable with TOTAL_SPACES amount of spaces
+	SPACES=''
+	for i in $TOTAL_SPACES; do
+            SPACES=SPACES+' '
+        done
 	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+------------------------------------------------------+$(tput sgr0)"
 	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)|                                                      |$(tput sgr0)"
-	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)|     #/\ $(tput sgr0)$(tput setab 0)$(tput setaf 7)$(tput smul)$1$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6) |$(tput sgr0)"
+	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)| $SPACES#/\ $(tput sgr0)$(tput setab 0)$(tput setaf 7)$(tput smul)$STRING(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)$SPACES |$(tput sgr0)"
 	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)|                                                      |$(tput sgr0)"
 	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+------------------------------------------------------+$(tput sgr0)"
 }
@@ -52,7 +67,7 @@ execCommand "apt-get install -y build-essential zlib1g-dev libpcre3 libpcre3-dev
 # Compile, and install nginx/pagespeed
 # See https://developers.google.com/speed/pagespeed/module/build_ngx_pagespeed_from_source
 # pagespeed version 1.9.32.3, psol version 1.9.32.3, nginx version 1.8.0
-outputMessage 'Downloading, compiling and installing nginx with pagespeed from source'
+outputMessage 'Installing nginx with pagespeed from source'
 execCommand "cd $SOURCE_FOLDER"
 execCommand "curl -# -o ${PAGESPEED_VERSION}-beta.zip https://github.com/pagespeed/ngx_pagespeed/archive/release-${PAGESPEED_VERSION}-beta.zip"
 execCommand "unzip release-${PAGESPEED_VERSION}-beta.zip > /dev/null"
@@ -68,7 +83,7 @@ execCommand "make > /dev/null"
 execCommand "make install > /dev/null"
 
 # Clone base files from git repo
-outputMessage 'Cloning base files from https://github.com/TimeTravelersHackMe/Ubuntu-Development-Server-Setup.git'
+outputMessage 'Cloning base files from GitHub'
 execCommand "cd $SOURCE_FOLDER"
 execCommand "rm -rf ubuntu-server-setup"
 execCommand "git clone -q --depth=1 https://github.com/TimeTravelersHackMe/Ubuntu-Development-Server-Setup.git ubuntu-server-setup"
@@ -77,12 +92,12 @@ execCommand "cp -rf * /"
 
 # Make nginx init script executable and add nginx to upstart
 # See https://github.com/JasonGiedymin/nginx-init-ubuntu (file included in server configuration file boilerplate)
-outputMessage 'Setting up nginx init script and adding nginx to startup'
+outputMessage 'Setting up nginx init script'
 execCommand "chmod +x /etc/init.d/nginx"
 execCommand "update-rc.d -f nginx defaults > /dev/null"
 
 # Enable default configuration file and start nginx
-outputMessage 'Symlinking default nginx configuration to sites-enabled'
+outputMessage 'Setting up default nginx configuration'
 execCommand "cd $NGINX_CONF_FOLDER/sites-enabled"
 execCommand "ln -s ../sites-available/default default"
 
