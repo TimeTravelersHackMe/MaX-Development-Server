@@ -78,10 +78,10 @@ execCommand "apt-get install -y build-essential zlib1g-dev libpcre3 libpcre3-dev
 # pagespeed version 1.9.32.3, psol version 1.9.32.3, nginx version 1.8.0
 outputMessage 'Installing nginx with pagespeed from source'
 changeDir "cd$SOURCE_FOLDER"
-execCommand "curl -# -o https://github.com/pagespeed/ngx_pagespeed/archive/release-${PAGESPEED_VERSION}-beta.zip"
+execCommand "curl -# -o release-${PAGESPEED_VERSION}-beta.zip https://github.com/pagespeed/ngx_pagespeed/archive/release-${PAGESPEED_VERSION}-beta.zip"
 execCommand "unzip release-${PAGESPEED_VERSION}-beta.zip"
 changeDir "cd ngx_pagespeed-release-${PAGESPEED_VERSION}-beta"
-execCommand "curl -# -o https://dl.google.com/dl/page-speed/psol/${PAGESPEED_VERSION}.tar.gz"
+execCommand "curl -# -o ${PAGESPEED_VERSION}.tar.gz https://dl.google.com/dl/page-speed/psol/${PAGESPEED_VERSION}.tar.gz"
 execCommand "tar -xzvf ${PAGESPEED_VERSION}.tar.gz"
 changeDir "cd $SOURCE_FOLDER"
 execCommand "curl -# -o nginx-${NGINX_VERSION}.tar.gz http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz"
