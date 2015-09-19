@@ -259,7 +259,7 @@ execCommand "add-apt-repository ppa:webupd8team/java -y"
 execCommand "apt-get update > /dev/null"
 # Source: http://www.webupd8.org/2014/03/how-to-install-oracle-java-8-in-debian.html
 execCommand "echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections"
-execCommand "apt-get install -y oracle-java8-installer > /dev/null"
+execCommand "apt-get install -y oracle-java8-installer > /dev/null 2>~/max.log"
 execCommand "apt-get install -y oracle-java8-set-default > /dev/null"
 
 # Install Apache Tomcat 8
@@ -268,7 +268,7 @@ execCommand "cd $SOURCE_FOLDER"
 execCommand "curl -# -o apache-tomcat-${TOMCAT_VERSION}.tar.gz http://ftp.wayne.edu/apache/tomcat/tomcat-${TOMCAT_VERSION_NUMBER}/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz"
 execCommand "tar zxf apache-tomcat-${TOMCAT_VERSION}.tar.gz -C /opt"
 execCommand "ln -s /opt/apache-tomcat-${TOMCAT_VERSION} /opt/tomcat8-latest"
-execCommand "adduser --system --ingroup www-data --home /opt/tomcat8-latest tomcat8 > /dev/null"
+execCommand "adduser --system --ingroup www-data --home /opt/tomcat8-latest tomcat8 > /dev/null 2>~/max.log"
 execCommand "chown -hR tomcat8:www-data /opt/tomcat8-latest /opt/apache-tomcat-${TOMCAT_VERSION}"
 execCommand "service tomcat8 start"
 
