@@ -31,15 +31,15 @@ function outputMessage {
 	#then
 	#	STRING="$STRING "
 	#fi
-	((STRING_LENGTH=4+${#STRING}))
-	((TOTAL_SPACES_TO_ADD=($MAX_LENGTH-$STRING_LENGTH)/2))
+	#((STRING_LENGTH=4+${#STRING}))
+	#((TOTAL_SPACES_TO_ADD=($MAX_LENGTH-$STRING_LENGTH)/2))
 	# Create variable with TOTAL_SPACES amount of spaces
-	SPACES=''
-	for (( i=1; i <= $TOTAL_SPACES_TO_ADD; i++ ))
-	do
-		echo "space added"
-        	SPACES=" $SPACES"
-        done
+	#SPACES=''
+	#for (( i=1; i <= $TOTAL_SPACES_TO_ADD; i++ ))
+	#do
+	#	echo "space added"
+        #	SPACES=" $SPACES"
+        #done
 	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+------------------------------------------------------+$(tput sgr0)"
 	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)|                                                      |$(tput sgr0)"
 	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)| $SPACES#/\ $(tput sgr0)$(tput setab 0)$(tput setaf 7)$(tput smul)$STRING$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)$SPACES |$(tput sgr0)"
