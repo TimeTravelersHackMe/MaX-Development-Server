@@ -225,13 +225,13 @@ execCommand "npm install -g bower > /dev/null"
 
 # Install Foundation for Apps CLI
 # Source: http://foundation.zurb.com/apps/getting-started.html
-#outputMessage 'Installing Foundation CLI'
-#execCommand "npm install -g foundation-cli > /dev/null"
+outputMessage 'Installing Foundation CLI'
+execCommand "npm install -g foundation-cli > /dev/null"
 
 # Install Bundler Gem (required for Foundation)
 # Source: http://foundation.zurb.com/apps/getting-started.html
-#outputMessage 'Installing Bundler'
-#execCommand "gem install bundler"
+outputMessage 'Installing Bundler'
+execCommand "gem install bundler"
 
 # Install Mono (for ASP support)
 # Source: http://www.mono-project.com/
