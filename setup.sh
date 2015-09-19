@@ -49,6 +49,8 @@ function outputMessage {
 
 function execCommand {
 	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+-----> $(tput sgr0)$(tput setab 0)$(tput setaf 7)$1$(tput sgr0)"
+	# Sends STDERR and STDOUT to max.log and displays STDERR to screen
+	# http://unix.stackexchange.com/questions/79996/how-to-redirect-stdout-and-stderr-to-a-file-and-display-stderr-to-console
 	eval $1 2>&1 >>~/max.log | tee --append ~/max.log
 }
 
