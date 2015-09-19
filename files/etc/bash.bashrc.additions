@@ -1,3 +1,9 @@
+# NVM tab completion
+[[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
+
+# RVM tab completion
+[[ -r $rvm_path/scripts/completion ]] && . $rvm_path/scripts/completion
+
 # Set variables
 NGINX_CONF_FOLDER='/etc/nginx'
 NGINX_WEB_ROOT='/usr/local/nginx/html'
