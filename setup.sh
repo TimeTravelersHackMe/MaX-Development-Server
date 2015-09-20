@@ -41,15 +41,26 @@ function outputMessage {
 	do
         	SPACES=" $SPACES"
         done
+        # Output message with colors to terminal
 	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+------------------------------------------------------+$(tput sgr0)"
 	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)|                                                      |$(tput sgr0)"
 	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)| $SPACES#/\ $(tput sgr0)$(tput setab 0)$(tput setaf 7)$(tput smul)$STRING$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)$EXTRA_SPACE$SPACES |$(tput sgr0)"
 	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)|                                                      |$(tput sgr0)"
 	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+------------------------------------------------------+$(tput sgr0)"
+	# Output message without colors to max.log
+	echo "+------------------------------------------------------+" >> ~/max.log
+	echo "|                                                      |" >> ~/max.log
+	echo "| $SPACES#/\ $STRING$$EXTRA_SPACE$SPACES |" >> ~/max.log
+	echo "|                                                      |" >> ~/max.log
+	echo "+------------------------------------------------------+" >> ~/max.log
+
 }
 
 function execCommand {
+	# Output message to terminal with colors
 	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+-----> $(tput sgr0)$(tput setab 0)$(tput setaf 7)$1$(tput sgr0)"
+	# Output message to max.log without colors
+	echo "+-----> $1" >> ~/max.log
 	# Sends STDERR and STDOUT to max.log and displays STDERR to screen
 	# http://unix.stackexchange.com/questions/79996/how-to-redirect-stdout-and-stderr-to-a-file-and-display-stderr-to-console
 	eval $1 2>&1 >>~/max.log | tee --append ~/max.log
@@ -59,7 +70,10 @@ function execCommand {
 }
 
 function changeDir {
+	# Output message to terminal with colors
 	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+-----> $(tput sgr0)$(tput setab 0)$(tput setaf 7)$1$(tput sgr0)"
+	# Output message to max.log without colors
+	echo "+-----> $1" >> ~/max.log
 	eval $1
 	# Can not figure out how to pipe STDERR/STDOUT from the cd command so the following line adds the current directory after the cd command is evaluated
 	pwd >> ~/max.log
