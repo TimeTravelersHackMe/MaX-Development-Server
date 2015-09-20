@@ -151,29 +151,38 @@ execCommand "echo [client] >> ~/.my.cnf"
 execCommand "echo user=root >> ~/.my.cnf"
 execCommand "echo password=${DB_ROOT_PASSWORD} >> ~/.my.cnf"
 
+# NOTE: PHPMyAdmin removed in favor of Adminer which supports PostgreSQL and MongoDB
 # Install PHPMyAdmin
 # Source: https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-nginx-on-an-ubuntu-14-04-server
-outputMessage 'Installing PHPMyAdmin'
-execCommand "debconf-set-selections <<< 'phpmyadmin phpmyadmin/reconfigure-webserver multiselect none'"
-execCommand "debconf-set-selections <<< 'phpmyadmin phpmyadmin/dbconfig-install boolean true'"
-execCommand "debconf-set-selections <<< 'phpmyadmin phpmyadmin/mysql/admin-pass password '$DB_ROOT_PASSWORD"
-execCommand "debconf-set-selections <<< 'phpmyadmin phpmyadmin/app-password-confirm password '$PHPMYADMIN_PASSWORD"
-execCommand "debconf-set-selections <<< 'phpmyadmin phpmyadmin/mysql/app-pass password '$PHPMYADMIN_PASSWORD"
-execCommand "apt-get install -y phpmyadmin"
-execCommand "ln -s /usr/share/phpmyadmin /usr/local/nginx/html"
+#outputMessage 'Installing PHPMyAdmin'
+#execCommand "debconf-set-selections <<< 'phpmyadmin phpmyadmin/reconfigure-webserver multiselect none'"
+#execCommand "debconf-set-selections <<< 'phpmyadmin phpmyadmin/dbconfig-install boolean true'"
+#execCommand "debconf-set-selections <<< 'phpmyadmin phpmyadmin/mysql/admin-pass password '$DB_ROOT_PASSWORD"
+#execCommand "debconf-set-selections <<< 'phpmyadmin phpmyadmin/app-password-confirm password '$PHPMYADMIN_PASSWORD"
+#execCommand "debconf-set-selections <<< 'phpmyadmin phpmyadmin/mysql/app-pass password '$PHPMYADMIN_PASSWORD"
+#execCommand "apt-get install -y phpmyadmin"
+#execCommand "ln -s /usr/share/phpmyadmin /usr/local/nginx/html"
 
 # Updating database port in PHPMyAdmin configuration file
-outputMessage 'Updating database port in PHPMyAdmin configuration file'
-changeDir "cd /etc/phpmyadmin"
-outputForComplicatedCommand "sed -i \"s/\$dbport='';/\$dbport='3308';/g\" config-db.php"
-sed -i "s/\$dbport='';/\$dbport='3306';/g" config-db.php
+#outputMessage 'Updating database port in PHPMyAdmin configuration file'
+#changeDir "cd /etc/phpmyadmin"
+#outputForComplicatedCommand "sed -i \"s/\$dbport='';/\$dbport='3308';/g\" config-db.php"
+#sed -i "s/\$dbport='';/\$dbport='3306';/g" config-db.php
 
 # Installing new PHPMyAdmin theme
-outputMessage 'Updating PHPMyAdmin theme'
-changeDir "cd /usr/share/phpmyadmin/themes"
-execCommand "cp $SOURCE_FOLDER/ubuntu-server-setup/phpmyadmin/metro-2.3.zip metro-2.3.zip"
-execCommand "unzip metro-2.3.zip"
-execCommand "rm metro-2.3.zip"
+#outputMessage 'Updating PHPMyAdmin theme'
+#changeDir "cd /usr/share/phpmyadmin/themes"
+#execCommand "cp $SOURCE_FOLDER/ubuntu-server-setup/phpmyadmin/metro-2.3.zip metro-2.3.zip"
+#execCommand "unzip metro-2.3.zip"
+#execCommand "rm metro-2.3.zip"
+
+# Install Adminer
+# See: https://extremeshok.com/5385/ubuntu-debian-redhat-centos-nginx-adminer-lite-phpmyadmin-alternative/
+outputMessage 'Installing Adminer'
+execCommand "mkdir $NGINX_WEB_ROOT/adminer"
+changeDir "cd $NGINX_WEB_ROOT/adminer"
+execCommand "curl -# -o index.php http://www.adminer.org/latest.php"
+execCommand "chown -R www-data:www-data $NGINX_WEB_ROOT/adminer"
 
 # Install Postfix
 # Source: https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-postfix-as-a-send-only-smtp-server-on-ubuntu-14-04
