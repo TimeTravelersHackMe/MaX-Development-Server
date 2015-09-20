@@ -41,26 +41,26 @@ function outputMessage {
 	do
         	SPACES=" $SPACES"
         done
-	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+------------------------------------------------------+$(tput sgr0)" | tee --append ~/max.log
-	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)|                                                      |$(tput sgr0)" | tee --append ~/max.log
-	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)| $SPACES#/\ $(tput sgr0)$(tput setab 0)$(tput setaf 7)$(tput smul)$STRING$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)$EXTRA_SPACE$SPACES |$(tput sgr0)" | tee --append ~/max.log
-	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)|                                                      |$(tput sgr0)" | tee --append ~/max.log
-	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+------------------------------------------------------+$(tput sgr0)" | tee --append ~/max.log
+	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+------------------------------------------------------+$(tput sgr0)"
+	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)|                                                      |$(tput sgr0)"
+	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)| $SPACES#/\ $(tput sgr0)$(tput setab 0)$(tput setaf 7)$(tput smul)$STRING$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)$EXTRA_SPACE$SPACES |$(tput sgr0)"
+	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)|                                                      |$(tput sgr0)"
+	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+------------------------------------------------------+$(tput sgr0)"
 }
 
 function execCommand {
-	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+-----> $(tput sgr0)$(tput setab 0)$(tput setaf 7)$1$(tput sgr0)" | tee --append ~/max.log
+	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+-----> $(tput sgr0)$(tput setab 0)$(tput setaf 7)$1$(tput sgr0)"
 	# Sends STDERR and STDOUT to max.log and displays STDERR to screen
 	# http://unix.stackexchange.com/questions/79996/how-to-redirect-stdout-and-stderr-to-a-file-and-display-stderr-to-console
 	eval $1 2>&1 >>~/max.log | tee --append ~/max.log
 }
 
 function outputForComplicatedCommand {
-	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+-----> $(tput sgr0)$(tput setab 0)$(tput setaf 7)$1$(tput sgr0)" | tee --append ~/max.log
+	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+-----> $(tput sgr0)$(tput setab 0)$(tput setaf 7)$1$(tput sgr0)"
 }
 
 function changeDir {
-	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+-----> $(tput sgr0)$(tput setab 0)$(tput setaf 7)$1$(tput sgr0)" | tee --append ~/max.log
+	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+-----> $(tput sgr0)$(tput setab 0)$(tput setaf 7)$1$(tput sgr0)"
 	eval $1
 	# Can not figure out how to pipe STDERR/STDOUT from the cd command so the following line adds the current directory after the cd command is evaluated
 	pwd >> ~/max.log
