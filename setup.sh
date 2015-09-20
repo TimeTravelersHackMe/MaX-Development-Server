@@ -220,6 +220,12 @@ execCommand 'echo "deb http://repo.mongodb.org/apt/ubuntu "$(lsb_release -sc)"/m
 execCommand "apt-get update"
 execCommand "apt-get install -y mongodb-org"
 
+# Add Genghis MongoDB manager to webroot
+# Source: https://github.com/bobthecow/genghis
+outputMessage 'Installing Genghis MongoDB manager to webroot'
+changeDir "cd $NGINX_WEB_ROOT"
+execCommand "curl -# -o genghis.php https://raw.githubusercontent.com/bobthecow/genghis/master/genghis.php"
+
 # Installs Browser Sync
 outputMessage 'Installing Browser Sync'
 execCommand "npm install -g browser-sync"
