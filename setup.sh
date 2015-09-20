@@ -79,8 +79,8 @@ execCommand "apt-get install -y build-essential zlib1g-dev libpcre3 libpcre3-dev
 # pagespeed version 1.9.32.3, psol version 1.9.32.3, nginx version 1.8.0
 outputMessage 'Installing nginx with pagespeed from source'
 changeDir "cd$SOURCE_FOLDER"
-execCommand "curl -# -o release-${PAGESPEED_VERSION}-beta.zip https://github.com/pagespeed/ngx_pagespeed/archive/release-${PAGESPEED_VERSION}-beta.zip"
-execCommand "unzip release-${PAGESPEED_VERSION}-beta.zip"
+execCommand "curl -# -o release-${PAGESPEED_VERSION}-beta.tar.gz https://github.com/pagespeed/ngx_pagespeed/archive/release-${PAGESPEED_VERSION}-beta.tar.gz"
+execCommand "tar -xzvf release-${PAGESPEED_VERSION}-beta.tar.gz"
 changeDir "cd ngx_pagespeed-release-${PAGESPEED_VERSION}-beta"
 execCommand "curl -# -o ${PAGESPEED_VERSION}.tar.gz https://dl.google.com/dl/page-speed/psol/${PAGESPEED_VERSION}.tar.gz"
 execCommand "tar -xzvf ${PAGESPEED_VERSION}.tar.gz"
@@ -251,7 +251,8 @@ execCommand "apt-get install -y mono-fastcgi-server4"
 # Add MySQL database connector for Mono
 outputMessage 'Add Mono MySQL database connector'
 changeDir "cd /usr/local/src"
-execCommand "curl -# -o mysql-connector-net-${MONO_DB_CONNECTOR_VERSION}-noinstall.zip http://dev.mysql.com/get/Downloads/Connector-Net/mysql-connector-net-${MONO_DB_CONNECTOR_VERSION}-noinstall.zip"
+# Would like to use curl -# -o to download the .zip file but for whatever reason unzip does not work when zips are downloaded with curl -# -o so wget is used in this case
+execCommand "wget http://dev.mysql.com/get/Downloads/Connector-Net/mysql-connector-net-${MONO_DB_CONNECTOR_VERSION}-noinstall.zip"
 execCommand "unzip mysql-connector-net-${MONO_DB_CONNECTOR_VERSION}-noinstall.zip -f mysql-connector-net"
 changeDir "cd mysql-connector-net"
 execCommand "gacutil /i MySql.Data.dll"
