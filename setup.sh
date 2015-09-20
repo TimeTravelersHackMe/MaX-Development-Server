@@ -299,7 +299,7 @@ outputMessage 'Installing RVM (Ruby Version Manager)'
 execCommand "gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3"
 execCommand "curl -sSL https://get.rvm.io | bash"
 execCommand "echo progress-bar >> ~/.curlrc"
-execCommand "source /etc/profile"
+execCommand "source /usr/local/rvm/scripts/rvm"
 
 # Install Ruby
 # For whatever reason RVM needs to be compiled from source to install compass
