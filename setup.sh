@@ -55,10 +55,6 @@ function execCommand {
 	eval $1 2>&1 >>~/max.log | tee --append ~/max.log
 }
 
-function outputForComplicatedCommand {
-	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+-----> $(tput sgr0)$(tput setab 0)$(tput setaf 7)$1$(tput sgr0)"
-}
-
 function changeDir {
 	echo "$(tput sgr0)$(tput setab 0)$(tput bold)$(tput setaf 6)+-----> $(tput sgr0)$(tput setab 0)$(tput setaf 7)$1$(tput sgr0)"
 	eval $1
@@ -150,31 +146,6 @@ outputMessage "Adding database root password to ~/.my.cnf"
 execCommand "echo [client] >> ~/.my.cnf"
 execCommand "echo user=root >> ~/.my.cnf"
 execCommand "echo password=${DB_ROOT_PASSWORD} >> ~/.my.cnf"
-
-# NOTE: PHPMyAdmin removed in favor of Adminer which supports PostgreSQL and MongoDB
-# Install PHPMyAdmin
-# Source: https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-nginx-on-an-ubuntu-14-04-server
-#outputMessage 'Installing PHPMyAdmin'
-#execCommand "debconf-set-selections <<< 'phpmyadmin phpmyadmin/reconfigure-webserver multiselect none'"
-#execCommand "debconf-set-selections <<< 'phpmyadmin phpmyadmin/dbconfig-install boolean true'"
-#execCommand "debconf-set-selections <<< 'phpmyadmin phpmyadmin/mysql/admin-pass password '$DB_ROOT_PASSWORD"
-#execCommand "debconf-set-selections <<< 'phpmyadmin phpmyadmin/app-password-confirm password '$PHPMYADMIN_PASSWORD"
-#execCommand "debconf-set-selections <<< 'phpmyadmin phpmyadmin/mysql/app-pass password '$PHPMYADMIN_PASSWORD"
-#execCommand "apt-get install -y phpmyadmin"
-#execCommand "ln -s /usr/share/phpmyadmin /usr/local/nginx/html"
-
-# Updating database port in PHPMyAdmin configuration file
-#outputMessage 'Updating database port in PHPMyAdmin configuration file'
-#changeDir "cd /etc/phpmyadmin"
-#outputForComplicatedCommand "sed -i \"s/\$dbport='';/\$dbport='3308';/g\" config-db.php"
-#sed -i "s/\$dbport='';/\$dbport='3306';/g" config-db.php
-
-# Installing new PHPMyAdmin theme
-#outputMessage 'Updating PHPMyAdmin theme'
-#changeDir "cd /usr/share/phpmyadmin/themes"
-#execCommand "cp $SOURCE_FOLDER/ubuntu-server-setup/phpmyadmin/metro-2.3.zip metro-2.3.zip"
-#execCommand "unzip metro-2.3.zip"
-#execCommand "rm metro-2.3.zip"
 
 # Install Adminer
 # See: https://extremeshok.com/5385/ubuntu-debian-redhat-centos-nginx-adminer-lite-phpmyadmin-alternative/
