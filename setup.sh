@@ -53,6 +53,9 @@ function execCommand {
 	# Sends STDERR and STDOUT to max.log and displays STDERR to screen
 	# http://unix.stackexchange.com/questions/79996/how-to-redirect-stdout-and-stderr-to-a-file-and-display-stderr-to-console
 	eval $1 2>&1 >>~/max.log | tee --append ~/max.log
+	# Source: http://stackoverflow.com/questions/32671814/eval-commands-with-stderr-stdout-redirection-causing-problems?noredirect=1#comment53199328_32671814
+	# if command starts with "cd ", execute it once more, but in the current shell:
+	#[[ "$1" == cd\ * ]] && $1
 }
 
 function changeDir {
@@ -188,7 +191,7 @@ execCommand "sudo mv wp-cli.phar /usr/local/bin/wp"
 # Source: https://www.digitalocean.com/community/tutorials/how-to-install-node-js-with-nvm-node-version-manager-on-a-vps
 outputMessage "Installing NVM"
 execCommand "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.26.1/install.sh | bash"
-execCommand "source $HOME/.nvm/nvm.sh"
+execCommand "bash . $HOME/.nvm/nvm.sh"
 execCommand "nvm install stable"
 #execCommand "n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local"
 
