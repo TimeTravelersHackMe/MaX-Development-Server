@@ -78,10 +78,10 @@ execCommand "apt-get install -y build-essential zlib1g-dev libpcre3 libpcre3-dev
 # Source: https://developers.google.com/speed/pagespeed/module/build_ngx_pagespeed_from_source
 # pagespeed version 1.9.32.3, psol version 1.9.32.3, nginx version 1.8.0
 outputMessage 'Installing nginx with pagespeed from source'
-changeDir "cd$SOURCE_FOLDER"
+changeDir "cd $SOURCE_FOLDER"
 # Would like to use curl -# -o for the download but unzipping messes up when curl is used to download a zip so wget is used
 execCommand "wget https://github.com/pagespeed/ngx_pagespeed/archive/release-${PAGESPEED_VERSION}-beta.zip"
-execCommand "unzip release-${PAGESPEED_VERSION}-beta.tar.gz"
+execCommand "unzip release-${PAGESPEED_VERSION}-beta.zip"
 changeDir "cd ngx_pagespeed-release-${PAGESPEED_VERSION}-beta"
 execCommand "curl -# -o ${PAGESPEED_VERSION}.tar.gz https://dl.google.com/dl/page-speed/psol/${PAGESPEED_VERSION}.tar.gz"
 execCommand "tar -xzvf ${PAGESPEED_VERSION}.tar.gz"
