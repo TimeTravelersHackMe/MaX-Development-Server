@@ -296,8 +296,8 @@ execCommand "source /etc/profile"
 
 # Install Ruby
 # For whatever reason RVM needs to be compiled from source to install compass
-# outputMessage 'Using RVM to install Ruby from source'
-# execCommand "rvm install 2.2 --disable-binary"
+outputMessage 'Using RVM to install Ruby from source'
+execCommand "rvm install 2.2 --disable-binary"
 
 # Install Compass
 outputMessage 'Installing Compass'
