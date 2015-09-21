@@ -230,8 +230,8 @@ execCommand "apt-get install -y mongodb-org"
 
 # Install Gulp
 # Source: https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md
-#outputMessage 'Installing Gulp'
-#execCommand "npm install -g gulp"
+outputMessage 'Installing Gulp'
+execCommand "npm install -g gulp"
 
 # Install Grunt CLI
 #outputMessage 'Installing Grunt CLI'
