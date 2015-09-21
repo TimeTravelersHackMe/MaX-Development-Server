@@ -86,6 +86,11 @@ function changeDir {
 	pwd >> ~/max.log
 }
 
+# Set to noninteractive mode
+# Source: http://serverfault.com/questions/500764/dpkg-reconfigure-unable-to-re-open-stdin-no-file-or-directory
+outputMessage 'Changing to noninteractive mode'
+execCommand "export DEBIAN_FRONTEND=noninteractive"
+
 # Update server
 outputMessage 'Updating the server'
 execCommand "apt-get update"
@@ -159,7 +164,6 @@ execCommand "update-rc.d hhvm defaults"
 outputMessage 'Installing MariaDB'
 execCommand "apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db"
 execCommand "add-apt-repository 'deb http://download.nus.edu.sg/mirror/mariadb/repo/10.0/ubuntu trusty main'"
-execCommand "export DEBIAN_FRONTEND=noninteractive"
 execCommand "debconf-set-selections <<< 'mariadb-server-10.0 mysql-server/root_password password '$DB_ROOT_PASSWORD"
 execCommand "debconf-set-selections <<< 'mariadb-server-10.0 mysql-server/root_password_again password '$DB_ROOT_PASSWORD"
 execCommand "apt-get update"
