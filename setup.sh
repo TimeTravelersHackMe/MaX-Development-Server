@@ -140,7 +140,7 @@ execCommand "ln -s ../sites-available/default default"
 # Install PHP-FPM
 # Source: http://www.maketecheasier.com/setup-lemh-stack-in-ubuntu/
 outputMessage 'Installing PHP-FPM'
-execCommand "apt-get install -y php5-fpm php5-mysql php5-curl"
+execCommand "apt-get install -y php5-fpm php5-mysql php5-curl php5-dev"
 
 # Install HHVM
 # Source: https://github.com/facebook/hhvm/wiki/Prebuilt-packages-on-Ubuntu-14.04
@@ -297,7 +297,7 @@ execCommand "service tomcat8 start"
 
 # Install PostgreSQL
 outputMessage 'Installing PostgreSQL'
-execCommand "apt-get install -y postgresql postgresql-contrib php5-pgsql"
+execCommand "apt-get install -y postgresql postgresql-contrib"
 
 # Install RVM (Ruby Version Manager)
 # Source: https://rvm.io/rvm/install
