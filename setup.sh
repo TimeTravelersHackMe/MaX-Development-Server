@@ -214,8 +214,7 @@ outputMessage "Installing NVM"
 execCommand "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.26.1/install.sh | bash"
 execSpecialCommand "source $HOME/.nvm/nvm.sh"
 execSpecialCommand "nvm install stable"
-execCommand "npm install -g gulp"
-execCommand "n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local"
+#execSpecialCommand "n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local"
 
 # Install MongoDB
 # Source: https://www.digitalocean.com/community/tutorials/how-to-install-mongodb-on-ubuntu-14-04
@@ -300,12 +299,12 @@ outputMessage 'Installing RVM (Ruby Version Manager)'
 execCommand "gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3"
 execCommand "curl -sSL https://get.rvm.io | bash"
 execCommand "echo progress-bar >> ~/.curlrc"
-execCommand "source /usr/local/rvm/scripts/rvm"
+execSpecialCommand "source /usr/local/rvm/scripts/rvm"
 
 # Install Ruby
 # For whatever reason RVM needs to be compiled from source to install compass
 outputMessage 'Using RVM to install Ruby from source'
-execCommand "rvm install 2.2 --disable-binary"
+execSpecialCommand "rvm install 2.2 --disable-binary"
 
 # Install Compass
 outputMessage 'Installing Compass'
