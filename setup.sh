@@ -224,30 +224,28 @@ execCommand 'echo "deb http://repo.mongodb.org/apt/ubuntu "$(lsb_release -sc)"/m
 execCommand "apt-get update"
 execCommand "apt-get install -y mongodb-org"
 
-# Install Adminer
-
 # Installs Browser Sync
-outputMessage 'Installing Browser Sync'
-execCommand "npm install -g browser-sync"
+#outputMessage 'Installing Browser Sync'
+#execCommand "npm install -g browser-sync"
 
 # Install Gulp
 # Source: https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md
-outputMessage 'Installing Gulp'
-execCommand "npm install -g gulp"
+#outputMessage 'Installing Gulp'
+#execCommand "npm install -g gulp"
 
 # Install Grunt CLI
-outputMessage 'Installing Grunt CLI'
-execCommand "npm install -g grunt-cli"
+#outputMessage 'Installing Grunt CLI'
+#execCommand "npm install -g grunt-cli"
 
 # Install Bower (required for Foundation)
 # Source: http://foundation.zurb.com/apps/getting-started.html
-outputMessage 'Installing Bower'
-execCommand "npm install -g bower"
+#outputMessage 'Installing Bower'
+#execCommand "npm install -g bower"
 
 # Install Foundation for Apps CLI
 # Source: http://foundation.zurb.com/apps/getting-started.html
-outputMessage 'Installing Foundation CLI'
-execCommand "npm install -g foundation-cli"
+#outputMessage 'Installing Foundation CLI'
+#execCommand "npm install -g foundation-cli"
 
 # Install Mono (for ASP support)
 # Source: http://www.mono-project.com/
@@ -307,13 +305,13 @@ outputMessage 'Using RVM to install Ruby from source'
 execSpecialCommand "rvm install 2.2 --disable-binary"
 
 # Install Compass
-outputMessage 'Installing Compass'
-execCommand "gem install compass"
+#outputMessage 'Installing Compass'
+#execCommand "gem install compass"
 
 # Install Bundler Gem (required for Foundation)
 # Source: http://foundation.zurb.com/apps/getting-started.html
-outputMessage 'Installing Bundler'
-execCommand "gem install bundler"
+#outputMessage 'Installing Bundler'
+#execCommand "gem install bundler"
 
 # Add aliases and functions to global bashrc file
 outputMessage 'Adding aliases to global bashrc file'
