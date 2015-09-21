@@ -215,10 +215,10 @@ outputMessage "Installing NVM"
 execCommand "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.26.1/install.sh | bash"
 execSpecialCommand "source $HOME/.nvm/nvm.sh"
 execSpecialCommand "nvm install stable"
-execCommand "n=$(which node)"
-execCommand "n=${n%/bin/node}"
-execCommand "chmod -R 755 $n/bin/*"
-execCommand "sudo cp -r $n/{bin,lib,share} /usr/local"
+#execCommand "n=$(which node)"
+#execCommand "n=${n%/bin/node}"
+#execCommand "chmod -R 755 $n/bin/*"
+#execCommand "sudo cp -r $n/{bin,lib,share} /usr/local"
 
 # Install MongoDB
 # Source: https://www.digitalocean.com/community/tutorials/how-to-install-mongodb-on-ubuntu-14-04
