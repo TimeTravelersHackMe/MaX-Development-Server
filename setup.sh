@@ -180,7 +180,7 @@ execCommand "echo password=${DB_ROOT_PASSWORD} >> ~/.my.cnf"
 outputMessage 'Installing Adminer'
 execCommand "mkdir $NGINX_WEB_ROOT/adminer"
 changeDir "cd $NGINX_WEB_ROOT/adminer"
-execCommand "curl -# -o index.php http://www.adminer.org/latest.php"
+execCommand "wget http://www.adminer.org/latest.php"
 execCommand "curl -# -o adminer.css https://raw.githubusercontent.com/pappu687/adminer-theme/master/adminer.css"
 execCommand "chown -R www-data:www-data $NGINX_WEB_ROOT/adminer"
 
