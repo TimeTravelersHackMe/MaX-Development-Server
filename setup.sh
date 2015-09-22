@@ -208,9 +208,13 @@ execCommand "echo \"root: ${EMAIL_ADDRESS}\" >> /etc/aliases"
 
 # Install WP-CLI
 outputMessage "Installing WP-CLI"
+# Source: http://wp-cli.org/
 execCommand "curl -# -o wp-cli.phar https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
 execCommand "chmod +x wp-cli.phar"
 execCommand "mv wp-cli.phar /usr/local/bin/wp"
+# Source: http://wp-cli.org/#complete
+changeDir "cd /usr/local/share"
+execCommand "curl -# -o wp-completion.bash https://raw.githubusercontent.com/wp-cli/wp-cli/master/utils/wp-completion.bash"
 
 # Install NVM
 # Source: https://github.com/creationix/nvm
