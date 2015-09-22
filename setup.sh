@@ -289,6 +289,7 @@ execSpecialCommand "source /usr/local/rvm/scripts/rvm"
 # For whatever reason RVM needs to be compiled from source to install compass
 outputMessage 'Using RVM to install Ruby from source'
 execSpecialCommand "rvm install 2.2 --disable-binary"
+execSpecialCommand "rvm use 2.2"
 
 # Add aliases and functions to global bashrc file
 outputMessage 'Adding aliases to global bashrc file'
