@@ -17,9 +17,10 @@ NVM and RVM are stored in /usr/local/. NPM, Node, and Ruby are all installed and
 For NVM:
 
 `export NVM_DIR="/usr/local/nvm"`
-For RVM:
 
+For RVM:
 `export rvm_path="/usr/local/rvm"`
+
 ## Benchmarks
 To come (after I include a benchmarking suite)
 
