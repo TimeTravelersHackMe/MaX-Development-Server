@@ -140,7 +140,7 @@ execCommand "ln -s ../sites-available/default default"
 # Install PHP-FPM
 # Source: http://www.maketecheasier.com/setup-lemh-stack-in-ubuntu/
 outputMessage 'Installing PHP-FPM'
-execCommand "apt-get install -y php5-fpm php5-mysql php5-curl php5-dev"
+execCommand "apt-get install -y php5-fpm php5-mysql php5-curl"
 
 # Install HHVM
 # Source: https://github.com/facebook/hhvm/wiki/Prebuilt-packages-on-Ubuntu-14.04
@@ -210,14 +210,14 @@ execCommand "echo \"root: ${EMAIL_ADDRESS}\" >> /etc/aliases"
 outputMessage "Installing WP-CLI"
 execCommand "curl -# -o wp-cli.phar https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
 execCommand "chmod +x wp-cli.phar"
-execCommand "sudo mv wp-cli.phar /usr/local/bin/wp"
+execCommand "mv wp-cli.phar /usr/local/bin/wp"
 
 # Install NVM
 # Source: https://github.com/creationix/nvm
 # Source: https://www.digitalocean.com/community/tutorials/how-to-install-node-js-with-nvm-node-version-manager-on-a-vps
 outputMessage "Installing NVM"
 execCommand "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.26.1/install.sh | NVM_DIR=/usr/local/nvm bash"
-execSpecialCommand "source $HOME/.nvm/nvm.sh"
+execSpecialCommand "source /usr/local/nvm/nvm.sh"
 execSpecialCommand "nvm install stable"
 
 # Install MongoDB
@@ -239,7 +239,7 @@ outputMessage 'Add Mono MySQL database connector'
 changeDir "cd /usr/local/src"
 # Would like to use curl -# -o to download the .zip file but for whatever reason unzip does not work when zips are downloaded with curl -# -o so wget is used in this case
 execCommand "wget http://dev.mysql.com/get/Downloads/Connector-Net/mysql-connector-net-${MONO_DB_CONNECTOR_VERSION}-noinstall.zip"
-execCommand "unzip mysql-connector-net-${MONO_DB_CONNECTOR_VERSION}-noinstall.zip -f mysql-connector-net"
+execCommand "unzip mysql-connector-net-${MONO_DB_CONNECTOR_VERSION}-noinstall.zip -d mysql-connector-net"
 changeDir "cd mysql-connector-net"
 execCommand "gacutil /i MySql.Data.dll"
 
@@ -284,15 +284,6 @@ execSpecialCommand "source /usr/local/rvm/scripts/rvm"
 # For whatever reason RVM needs to be compiled from source to install compass
 outputMessage 'Using RVM to install Ruby from source'
 execSpecialCommand "rvm install 2.2 --disable-binary"
-
-# Install Compass
-#outputMessage 'Installing Compass'
-#execCommand "gem install compass"
-
-# Install Bundler Gem (required for Foundation)
-# Source: http://foundation.zurb.com/apps/getting-started.html
-#outputMessage 'Installing Bundler'
-#execCommand "gem install bundler"
 
 # Add aliases and functions to global bashrc file
 outputMessage 'Adding aliases to global bashrc file'
