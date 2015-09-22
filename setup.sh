@@ -216,13 +216,9 @@ execCommand "sudo mv wp-cli.phar /usr/local/bin/wp"
 # Source: https://github.com/creationix/nvm
 # Source: https://www.digitalocean.com/community/tutorials/how-to-install-node-js-with-nvm-node-version-manager-on-a-vps
 outputMessage "Installing NVM"
-execCommand "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.26.1/install.sh | bash"
+execCommand "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.26.1/install.sh | NVM_DIR=/usr/local/nvm bash"
 execSpecialCommand "source $HOME/.nvm/nvm.sh"
 execSpecialCommand "nvm install stable"
-#execCommand "n=$(which node)"
-#execCommand "n=${n%/bin/node}"
-#execCommand "chmod -R 755 $n/bin/*"
-#execCommand "sudo cp -r $n/{bin,lib,share} /usr/local"
 
 # Install MongoDB
 # Source: https://www.digitalocean.com/community/tutorials/how-to-install-mongodb-on-ubuntu-14-04
@@ -231,29 +227,6 @@ execCommand "sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7
 execCommand 'echo "deb http://repo.mongodb.org/apt/ubuntu "$(lsb_release -sc)"/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list'
 execCommand "apt-get update"
 execCommand "apt-get install -y mongodb-org"
-
-# Installs Browser Sync
-#outputMessage 'Installing Browser Sync'
-#execCommand "npm install -g browser-sync"
-
-# Install Gulp
-# Source: https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md
-outputMessage 'Installing Gulp'
-execCommand "npm install -g gulp"
-
-# Install Grunt CLI
-#outputMessage 'Installing Grunt CLI'
-#execCommand "npm install -g grunt-cli"
-
-# Install Bower (required for Foundation)
-# Source: http://foundation.zurb.com/apps/getting-started.html
-#outputMessage 'Installing Bower'
-#execCommand "npm install -g bower"
-
-# Install Foundation for Apps CLI
-# Source: http://foundation.zurb.com/apps/getting-started.html
-#outputMessage 'Installing Foundation CLI'
-#execCommand "npm install -g foundation-cli"
 
 # Install Mono (for ASP support)
 # Source: http://www.mono-project.com/
