@@ -6,8 +6,8 @@ export NVM_DIR="/usr/local/nvm"
 [[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
 
 # Add RVM
-export rvm_path="/usr/local/rvm"
 # Source: http://stackoverflow.com/questions/9336596/rvm-installation-not-working-rvm-is-not-a-function#answer-16103755
+export rvm_path="/usr/local/rvm"
 [[ -s "$rvm_path/scripts/rvm" ]] && . "$rvm_path/scripts/rvm"
 # Add RVM tab completion
 # Source: https://rvm.io/workflow/completion
