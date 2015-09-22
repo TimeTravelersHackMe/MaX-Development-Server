@@ -1,4 +1,3 @@
-change NVM/RVM to /opt/ ?
 PHP cgi.fix_pathinfo=0 on php.ini
 switch to sockets on HHVM
 tweak HHVM for performance
