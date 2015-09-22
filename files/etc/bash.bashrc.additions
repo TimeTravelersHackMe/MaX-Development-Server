@@ -1,8 +1,14 @@
 # Add NVM
-[ -s "/usr/local/nvm/nvm.sh" ] && . "/usr/local/nvm/nvm.sh"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+# Add NVM tab completion
+[[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
 
 # Add RVM
-[[ -s "/usr/local/rvm/scripts/rvm" ]] && . "/usr/local/rvm/scripts/rvm"
+# Source: http://stackoverflow.com/questions/9336596/rvm-installation-not-working-rvm-is-not-a-function#answer-16103755
+[[ -s "$rvm_path/scripts/rvm" ]] && . "$rvm_path/scripts/rvm"
+# Add RVM tab completion
+# Source: https://rvm.io/workflow/completion
+[[ -r $rvm_path/scripts/completion ]] && . $rvm_path/scripts/completion
 
 # Set variables
 NGINX_CONF_FOLDER='/etc/nginx'
