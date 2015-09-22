@@ -219,6 +219,7 @@ outputMessage "Installing NVM"
 execCommand "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.26.1/install.sh | NVM_DIR=/usr/local/nvm bash"
 execSpecialCommand "source /usr/local/nvm/nvm.sh"
 execSpecialCommand "nvm install stable"
+execSpecialCommand "nvm alias default stable"
 
 # Install MongoDB
 # Source: https://www.digitalocean.com/community/tutorials/how-to-install-mongodb-on-ubuntu-14-04
