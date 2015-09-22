@@ -1,4 +1,7 @@
-# Add Adminer
+add auto completion for wp, nvm, rvm
+PHP cgi.fix_pathinfo=0 on php.ini
+switch to sockets on HHVM
+tweak HHVM for performance
 # Add dropbox_uploader.sh to users home directory (https://github.com/andreafabrizi/Dropbox-Uploader)
 # look into WordPress -> static website maker (JeKyll?)
 # Include Electron (see: http://electron.atom.io/)
