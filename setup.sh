@@ -158,14 +158,6 @@ execCommand "service hhvm restart"
 outputMessage 'Adding HHVM to startup'
 execCommand "update-rc.d hhvm defaults"
 
-# Install HHVM PostgreSQL module
-# Source: https://github.com/PocketRent/hhvm-pgsql/tree/releases
-outputMessage 'Installing HHVM PostgreSQL module'
-execCommand 'wget https://github.com/PocketRent/hhvm-pgsql/raw/releases/3.7.0/ubuntu/trusty/pgsql.so'
-execCommand 'mv pgsql.so /etc/hhvm/pgsql.so'
-execCommand "echo 'extension_dir = /etc/hhvm' >> php.ini"
-execCommand "echo 'hhvm.extensions[pgsql] = pgsql.so' >> php.ini"
-
 # Install MariaDB
 # Source: http://www.ubuntugeek.com/install-mariadb-on-ubuntu-14-04-trusty-server.html
 # Source: http://stackoverflow.com/questions/7739645/install-mysql-on-ubuntu-without-password-prompt
