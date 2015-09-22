@@ -141,6 +141,9 @@ execCommand "ln -s ../sites-available/default default"
 # Source: http://www.maketecheasier.com/setup-lemh-stack-in-ubuntu/
 outputMessage 'Installing PHP-FPM'
 execCommand "apt-get install -y php5-fpm php5-mysql php5-curl php5-pgsql"
+# Fixes security issue with PHP via FastCGI
+# See: http://cnedelcu.blogspot.com/2010/05/nginx-php-via-fastcgi-important.html
+execCommand 'sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php5/fpm/php.ini'
 
 # Install HHVM
 # Source: https://github.com/facebook/hhvm/wiki/Prebuilt-packages-on-Ubuntu-14.04
