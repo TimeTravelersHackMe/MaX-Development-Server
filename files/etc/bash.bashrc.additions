@@ -1,5 +1,4 @@
 # Add NVM
-#export NVM_DIR="/usr/local/nvm"
 [ -s "/usr/local/nvm/nvm.sh" ] && . "/usr/local/nvm/nvm.sh"
 
 # Add RVM
