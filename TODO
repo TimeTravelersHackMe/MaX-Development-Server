@@ -1,4 +1,4 @@
-PHP cgi.fix_pathinfo=0 on php.ini
+# take stuff from here: https://github.com/fideloper/docker-nginx-php
 watch and reload nginx-configs
 localtunnel.me type deal
 # figure out if its possible to take 127.0.0.1:80 and an ip address
