@@ -15,8 +15,10 @@
 NVM and RVM are stored in /usr/local/. NPM, Node, and Ruby are all installed and available for all users. However, if a user without root priveledges wants to use a different version of NPM, node, or Ruby then they will have to either obtain root priveledges so they can access /usr/local files or they can change their NVM/RVM locations so that they reside in a folder that they have priveledges to.
 
 For NVM:
+
 `export NVM_DIR="/usr/local/nvm"`
 For RVM:
+
 `export rvm_path="/usr/local/rvm"`
 ## Benchmarks
 To come (after I include a benchmarking suite)
