@@ -13,6 +13,10 @@ export rvm_path="/usr/local/rvm"
 # Source: https://rvm.io/workflow/completion
 [[ -r $rvm_path/scripts/completion ]] && . $rvm_path/scripts/completion
 
+# Add WP-CLI tab completion
+# Source: http://wp-cli.org/#complete
+source /usr/local/share/wp-completion.bash
+
 # Set variables
 NGINX_CONF_FOLDER='/etc/nginx'
 NGINX_WEB_ROOT='/usr/local/nginx/html'
