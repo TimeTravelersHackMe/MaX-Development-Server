@@ -19,6 +19,7 @@ For NVM:
 `export NVM_DIR="/usr/local/nvm"`
 
 For RVM:
+
 `export rvm_path="/usr/local/rvm"`
 
 ## Benchmarks
