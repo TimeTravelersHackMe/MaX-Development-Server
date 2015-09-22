@@ -195,7 +195,7 @@ execCommand "debconf-set-selections <<< 'postfix postfix/main_mailer_type string
 execCommand "apt-get install -y mailutils"
 
 # Change Postfix to send-only mode
-outputMessage 'Changing Postfix to only accept emails from localhost'
+outputMessage 'Accept emails from localhost only'
 changeDir "cd /etc/postfix"
 execCommand "sed -i 's/inet_interfaces = all/inet_interfaces = localhost/g' main.cf"
 
