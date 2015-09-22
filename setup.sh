@@ -140,7 +140,7 @@ execCommand "ln -s ../sites-available/default default"
 # Install PHP-FPM
 # Source: http://www.maketecheasier.com/setup-lemh-stack-in-ubuntu/
 outputMessage 'Installing PHP-FPM'
-execCommand "apt-get install -y php5-fpm php5-mysql php5-curl"
+execCommand "apt-get install -y php5-fpm php5-mysql php5-curl php5-pgsql"
 
 # Install HHVM
 # Source: https://github.com/facebook/hhvm/wiki/Prebuilt-packages-on-Ubuntu-14.04
@@ -157,6 +157,14 @@ execCommand "service hhvm restart"
 # Source: https://github.com/fideloper/Vaprobash/blob/master/scripts/php.sh
 outputMessage 'Adding HHVM to startup'
 execCommand "update-rc.d hhvm defaults"
+
+# Install HHVM PostgreSQL module
+# Source: https://github.com/PocketRent/hhvm-pgsql/tree/releases
+outputMessage 'Installing HHVM PostgreSQL module'
+execCommand 'wget https://github.com/PocketRent/hhvm-pgsql/raw/releases/3.7.0/ubuntu/trusty/pgsql.so'
+execCommand 'mv pgsql.so /etc/hhvm/pgsql.so'
+execCommand "echo 'extension_dir = /etc/hhvm' >> php.ini"
+execCommand "echo 'hhvm.extensions[pgsql] = pgsql.so' >> php.ini"
 
 # Install MariaDB
 # Source: http://www.ubuntugeek.com/install-mariadb-on-ubuntu-14-04-trusty-server.html
