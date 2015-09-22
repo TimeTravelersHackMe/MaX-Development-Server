@@ -1,4 +1,5 @@
 PHP cgi.fix_pathinfo=0 on php.ini
+watch and reload nginx-configs
 localtunnel.me type deal
 # figure out if its possible to take 127.0.0.1:80 and an ip address
 switch to sockets on HHVM
