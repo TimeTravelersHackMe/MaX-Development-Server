@@ -122,7 +122,7 @@ execCommand "make install"
 outputMessage 'Cloning base files from GitHub'
 changeDir "cd $SOURCE_FOLDER"
 execCommand "rm -rf ubuntu-server-setup"
-execCommand "git clone -q --depth=1 https://github.com/TimeTravelersHackMe/Ubuntu-Development-Server-Setup.git ubuntu-server-setup"
+execCommand "git clone -q --depth=1 https://github.com/TimeTravelersHackMe/MaX-Development-Server.git ubuntu-server-setup"
 changeDir "cd ubuntu-server-setup/files"
 execCommand "cp -rf * /"
 
