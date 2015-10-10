@@ -18,7 +18,7 @@ PAGESPEED_VERSION='1.9.32.3'
 NGINX_VERSION='1.8.0'
 NVM_VERSION='0.26.1'
 MONO_DB_CONNECTOR_VERSION='6.9.7'
-TOMCAT_VERSION='8.0.26'
+TOMCAT_VERSION='8.0.27'
 TOMCAT_VERSION_NUMBER='8'
 
 # Set functions
@@ -269,7 +269,7 @@ execCommand "apt-get install -y oracle-java8-set-default"
 # Install Apache Tomcat 8
 outputMessage "Installing Apache Tomcat 8"
 changeDir "cd $SOURCE_FOLDER"
-execCommand "curl -# -o apache-tomcat-${TOMCAT_VERSION}.tar.gz http://ftp.wayne.edu/apache/tomcat/tomcat-${TOMCAT_VERSION_NUMBER}/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz"
+execCommand "curl -# -o apache-tomcat-${TOMCAT_VERSION}.tar.gz http://mirrors.sonic.net/apache/tomcat/tomcat-8/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz"
 execCommand "tar -xvzf apache-tomcat-${TOMCAT_VERSION}.tar.gz -C /opt"
 execCommand "ln -s /opt/apache-tomcat-${TOMCAT_VERSION} /opt/tomcat8-latest"
 execCommand "adduser --system --ingroup www-data --home /opt/tomcat8-latest tomcat8"
