@@ -9,6 +9,7 @@ NEW_ROOT_PASSWORD=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c32 | tr -d '-')
 # Environment settings
 POSTFIX_HOSTNAME='nullclient.com'
 EMAIL_ADDRESS='chase@nullclient.com'
+SWAP_SIZE_IN_GIGABYTES='4'
 
 # Set folder structure/version variables
 SOURCE_FOLDER='/usr/local/src'
@@ -93,7 +94,17 @@ execCommand "export DEBIAN_FRONTEND=noninteractive"
 
 # Update server
 outputMessage 'Updating the server'
-execCommand "apt-get update"
+execCommand "apt-get update && apt-get upgrade"
+
+# Add swap file
+# Source: https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-14-04
+outputMessage 'Adding swap memory'
+execCommand "fallocate -l ${SWAP_SIZE_IN_GIGABYTES}G /swapfile"
+execCommand "chmod 600 /swapfile"
+execCommand "mkswap /swapfile"
+execCommand "swapon /swapfile"
+execCommand "echo '/swapfile   none    swap    sw    0   0' >> /etc/fstab"
+
 
 # Install dependencies
 outputMessage 'Installing dependencies'
