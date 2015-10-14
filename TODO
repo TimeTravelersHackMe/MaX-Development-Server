@@ -17,3 +17,4 @@ tweak HHVM for performance
 # Add benchmarking suite
 # Add Firewall config
 # Does debconf-set-selection data have to be cleared?
+# Add sudo apt-get install php5-imagick
