@@ -20,3 +20,4 @@ tweak HHVM for performance
 # Add sudo apt-get install php5-imagick
 # http://siderrz.com/enabling-wordpress-imagemagick-engine-on-digital-ocean/
 # Add imagemagick php5-cli too
+# Add npm install -g gulp
