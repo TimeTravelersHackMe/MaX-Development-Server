@@ -1,5 +1,4 @@
 # steal from centminmod and easyengine
-# add swapfile
 # take stuff from here: https://github.com/fideloper/docker-nginx-php
 watch and reload nginx-configs
 localtunnel.me type deal
