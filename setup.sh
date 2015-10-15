@@ -148,10 +148,14 @@ outputMessage 'Setting up default nginx configuration'
 changeDir "cd $NGINX_CONF_FOLDER/sites-enabled"
 execCommand "ln -s ../sites-available/default default"
 
+# Install ImageMagick
+outputMessage 'Installing ImageMagick'
+execCommand "apt-get install imagemagick"
+
 # Install PHP-FPM
 # Source: http://www.maketecheasier.com/setup-lemh-stack-in-ubuntu/
 outputMessage 'Installing PHP-FPM'
-execCommand "apt-get install -y php5-fpm php5-mysql php5-curl php5-pgsql php5-cli"
+execCommand "apt-get install -y php5-fpm php5-mysql php5-curl php5-pgsql php5-cli php5-magick"
 # Fixes security issue with PHP via FastCGI
 # See: http://cnedelcu.blogspot.com/2010/05/nginx-php-via-fastcgi-important.html
 execCommand 'sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php5/fpm/php.ini'
@@ -246,10 +250,6 @@ execCommand "sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7
 execCommand 'echo "deb http://repo.mongodb.org/apt/ubuntu "$(lsb_release -sc)"/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list'
 execCommand "apt-get update"
 execCommand "apt-get install -y mongodb-org"
-
-# Install ImageMagick
-outputMessage 'Installing ImageMagick'
-execCommand "apt-get install imagemagick"
 
 # Install Mono (for ASP support)
 # Source: http://www.mono-project.com/
