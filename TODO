@@ -1,17 +1,10 @@
-# steal from centminmod and easyengine
 # take stuff from here: https://github.com/fideloper/docker-nginx-php
 watch and reload nginx-configs
-localtunnel.me type deal
-# figure out if its possible to take 127.0.0.1:80 and an ip address
 switch to sockets on HHVM
 tweak HHVM for performance
-# Add dropbox_uploader.sh to users home directory (https://github.com/andreafabrizi/Dropbox-Uploader)
 # look into WordPress -> static website maker (JeKyll?)
 # Include Electron (see: http://electron.atom.io/)
 # Add WPScan (WordPress security scanner)
-# research into MeteorJS vs Firebase
-# compare foundation-apps to angular-seed and angular-bootstrap
-# add https://github.com/typicode/json-server
 # figure out where https://github.com/driftyco/ionic and Cordova fit in
 # Add benchmarking suite
 # Add Firewall config
