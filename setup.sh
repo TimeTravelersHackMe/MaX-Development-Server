@@ -372,6 +372,24 @@ function switch_to_vagrant_user {
 	execCommand "su vagrant"
 }
 
+# Install gulp
+function install_gulp {
+	outputMessage "Installing gulp"
+	execCommand "npm install -g gulp"
+}
+
+# Install cordova
+function install_cordova {
+	outputMessage "Installing Cordova"
+	execCommand "npm install -g cordova"
+}
+
+# Install Iconic
+function install_iconic {
+	outputMessage "Installing Iconic"
+	execCommand "npm install -g iconic"
+}
+
 grant_vagrant_sudo
 switch_to_vagrant_user
 update_server
@@ -402,4 +420,7 @@ install_apache_tomcat
 install_postgresql
 install_rvm
 install_ruby
+install_gulp
+install_cordova
+install_iconic
 add_global_bashrc_aliases
