@@ -378,16 +378,17 @@ function install_gulp {
 	execCommand "npm install -g gulp"
 }
 
-# Install cordova
+# Install Cordova
 function install_cordova {
 	outputMessage "Installing Cordova"
 	execCommand "npm install -g cordova"
 }
 
 # Install Iconic
-function install_iconic {
-	outputMessage "Installing Iconic"
-	execCommand "npm install -g iconic"
+# Source: http://ionicframework.com/getting-started/
+function install_ionic {
+	outputMessage "Installing Ionic"
+	execCommand "npm install -g ionic"
 }
 
 grant_vagrant_sudo
@@ -422,5 +423,5 @@ install_rvm
 install_ruby
 install_gulp
 install_cordova
-install_iconic
+install_ionic
 add_global_bashrc_aliases
