@@ -391,6 +391,12 @@ function install_ionic {
 	execCommand "npm install -g ionic"
 }
 
+# Install CouchDB
+function install_couchdb {
+	outputMessage "Installing CouchDB"
+	execCommand "apt-get install couchdb"
+}
+
 grant_vagrant_sudo
 switch_to_vagrant_user
 update_server
@@ -424,4 +430,5 @@ install_ruby
 install_gulp
 install_cordova
 install_ionic
+install_couchdb
 add_global_bashrc_aliases
