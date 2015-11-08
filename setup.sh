@@ -395,6 +395,8 @@ function install_ionic {
 function install_couchdb {
 	outputMessage "Installing CouchDB"
 	execCommand "apt-get install couchdb"
+	execCommand "sed -i 's/;bind_address = 127.0.0.1/bind_address = 127.0.0.1/g' /etc/couchdb/local.ini"
+	execCommand "service couchdb restart"
 }
 
 grant_vagrant_sudo
