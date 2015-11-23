@@ -399,8 +399,8 @@ function install_couchdb {
 	execCommand "service couchdb restart"
 }
 
-grant_vagrant_sudo
-switch_to_vagrant_user
+#grant_vagrant_sudo
+#switch_to_vagrant_user
 update_server
 add_swap
 install_dependencies
