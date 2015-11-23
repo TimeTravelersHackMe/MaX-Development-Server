@@ -429,8 +429,8 @@ install_apache_tomcat
 install_postgresql
 install_rvm
 install_ruby
-install_gulp
-install_cordova
-install_ionic
+#install_gulp
+#install_cordova
+#install_ionic
 install_couchdb
 add_global_bashrc_aliases
