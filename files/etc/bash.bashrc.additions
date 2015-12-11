@@ -137,7 +137,7 @@ if [ ! -d "$1" ]; then
         
         # Add website name for php log and staging plugin
         sed -i "s/{WEBSITE_NAME}/$1/g" wp-config.php
-        sed -i "s/{WEBSITE_NAME_MINUS_TLD}/$(eval echo $1 | cut -f1 -d"\"."\")/g" wp-config.php
+        sed -i "s/{WEBSITE_NAME_MINUS_TLD}/$(eval echo $1 | cut -f1 -d \." wp-config.php
 
         # Adding custom WordPress file structure and creating blank index.php files in each folder
         mkdir media
