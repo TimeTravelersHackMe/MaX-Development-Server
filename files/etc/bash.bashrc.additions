@@ -127,7 +127,7 @@ if [ ! -d "$1" ]; then
         sed -i "s/{DATABASE_USER}/$DATABASE_USER/g" wp-config.php
         sed -i "s/{DATABASE_PASSWORD}/$DATABASE_PASSWORD/g" wp-config.php
         sed -i "s/{DATABASE_PREFIX}/$DATABASE_PREFIX/g" wp-config.php
-
+        
         # Edit Salts in wp-config.php
         perl -i -pe 'BEGIN {$KEYSALTS = qx(curl -sS https://api.wordpress.org/secret-key/1.1/salt)} s/{AUTH-KEYS-SALTS}/$KEYSALTS/g' wp-config.php
 
@@ -149,9 +149,10 @@ if [ ! -d "$1" ]; then
         mkdir assets/includes
 
         # Add symlink to media folder
-        cd wp
-        ln -s media ../media
-        cd ..
+        # Removed in favor of another method since VirtualBox does not support symlinks on Windows
+        # cd wp
+        # ln -s media ../media
+        # cd ..
 
         # Add default theme
         cd assets/themes
