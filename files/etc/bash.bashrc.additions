@@ -129,7 +129,8 @@ if [ ! -d "$1" ]; then
         sed -i "s/{DATABASE_PREFIX}/$DATABASE_PREFIX/g" wp-config.php
         
         # Edit Salts in wp-config.php
-        perl -i -pe 'BEGIN {$KEYSALTS = qx(curl -sS https://api.wordpress.org/secret-key/1.1/salt)} s/{AUTH-KEYS-SALTS}/$KEYSALTS/g' wp-config.php
+        KEYSALTS=$(curl -s https://api.wordpress.org/secret-key/1.1/salt/)
+        sed -i "s/{AUTH-KEY-SALTS}/$KEYSALTS/g" wp-config.php
 
         # Edit default theme folder name in wp-config.php
         sed -i "s/{DEFAULT_THEME}/$DEFAULT_THEME_FOLDER_NAME/g" wp-config.php
