@@ -419,7 +419,7 @@ configure_postfix_dns
 forward_root_mail_to_admin_email
 install_wp_cli
 install_node
-install_n
+#install_n
 install_mongodb
 install_mono
 install_mono_mysql_database_connector
