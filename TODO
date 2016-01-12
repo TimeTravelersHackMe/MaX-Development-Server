@@ -11,3 +11,4 @@ tweak HHVM for performance
 # Does debconf-set-selection data have to be cleared?
 # http://siderrz.com/enabling-wordpress-imagemagick-engine-on-digital-ocean/
 # Add npm install -g gulp
+# Change listen addresses on PostgreSQL in postgresql.conf to *
