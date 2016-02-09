@@ -366,37 +366,6 @@ function add_global_bashrc_aliases {
 	execCommand "cat /etc/bash.bashrc.additions >> /etc/bash.bashrc"
 }
 
-# Give vagrant user root priviledges
-function grant_vagrant_sudo {
-	outputMessage 'Granting vagrant user sudo priviledges'
-	execCommand "adduser vagrant sudo"
-}
-
-# Switch user to vagrant
-function switch_to_vagrant_user {
-	outputMessage 'Switching user to vagrant'
-	execCommand "su vagrant"
-}
-
-# Install gulp
-function install_gulp {
-	outputMessage "Installing gulp"
-	execCommand "npm install -g gulp"
-}
-
-# Install Cordova
-function install_cordova {
-	outputMessage "Installing Cordova"
-	execCommand "npm install -g cordova"
-}
-
-# Install Iconic
-# Source: http://ionicframework.com/getting-started/
-function install_ionic {
-	outputMessage "Installing Ionic"
-	execCommand "npm install -g ionic"
-}
-
 # Install CouchDB
 function install_couchdb {
 	outputMessage "Installing CouchDB"
@@ -425,7 +394,6 @@ configure_postfix_dns
 forward_root_mail_to_admin_email
 install_wp_cli
 install_node
-#install_n
 install_mongodb
 install_mono
 install_mono_mysql_database_connector
@@ -436,8 +404,5 @@ install_postgresql
 allow_external_connections_to_postgresql
 install_rvm
 install_ruby
-#install_gulp
-#install_cordova
-#install_ionic
 install_couchdb
 add_global_bashrc_aliases
