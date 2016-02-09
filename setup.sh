@@ -336,6 +336,12 @@ function install_postgresql {
 	execCommand "apt-get install -y postgresql postgresql-contrib"
 }
 
+# Allow external connections on PostgreSQL
+function allow_external_connections_to_postgresql {
+	outputMessage 'Copying new PostgreSQL configuration file to allow external connections'
+	execCommand "cp $SOURCE_FOLDER/postgresql/pg_hba.conf /etc/postgresql/9.3/main/pg_hba.conf"
+}
+
 # Install RVM (Ruby Version Manager)
 # Source: https://rvm.io/rvm/install
 function install_rvm {
@@ -427,6 +433,7 @@ mono_init_script
 install_oracle_jdk
 install_apache_tomcat
 install_postgresql
+allow_external_connections_to_postgresql
 install_rvm
 install_ruby
 #install_gulp
