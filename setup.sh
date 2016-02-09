@@ -334,7 +334,6 @@ function install_apache_tomcat {
 function install_postgresql {
 	outputMessage 'Installing PostgreSQL'
 	execCommand "apt-get install -y postgresql postgresql-contrib"
-	execCommand "sed -i 's/local   all             postgres                                peer/local   all             postgres                                md5/' /etc/postgresql/9.3/main/pg_hba.conf"
 }
 
 # Install RVM (Ruby Version Manager)
