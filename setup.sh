@@ -340,6 +340,7 @@ function install_postgresql {
 function allow_external_connections_to_postgresql {
 	outputMessage 'Copying new PostgreSQL configuration file to allow external connections'
 	execCommand "cp $SOURCE_FOLDER/ubuntu-server-setup/postgresql/pg_hba.conf /etc/postgresql/9.3/main/pg_hba.conf"
+	execCommand "cp $SOURCE_FOLDER/ubuntu-server-setup/postgresql/postgresql.conf /etc/postgresql/9.3/main/postgresql.conf"
 }
 
 # Install RVM (Ruby Version Manager)
